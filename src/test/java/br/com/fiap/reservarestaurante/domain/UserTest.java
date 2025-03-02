@@ -1,6 +1,8 @@
 package br.com.fiap.reservarestaurante.domain;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -23,16 +25,13 @@ class UserTest {
         assertThat(result.getFullName()).isEqualTo("Evandro Pastor");
     }
 
-    @Test
-    void shouldReturnExceptionFistNameNull() {
-        var exception = catchThrowable(() -> new User(null, "Pastor", 49));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Name cannot be null or empty");
-    }
-
-    @Test
-    void shouldReturnExceptionFistNameEmpty() {
-        var exception = catchThrowable(() -> new User("", "Pastor", 49));
+    @CsvSource(value = {
+            "null",
+            "''"
+    }, nullValues = {"null"})
+    @ParameterizedTest
+    void shouldReturnExceptionFistNameNullOrEmpty(String name) {
+        var exception = catchThrowable(() -> new User(name, "Pastor", 49));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Name cannot be null or empty");
     }
@@ -45,16 +44,13 @@ class UserTest {
     }
 
 
-    @Test
-    void shouldReturnExceptionSurnameNameNull() {
+    @CsvSource(value = {
+            "null",
+            "''"
+    }, nullValues = {"null"})
+    @ParameterizedTest
+    void shouldReturnExceptionSurnameNameNullOrEmpty() {
         var exception = catchThrowable(() -> new User("Evandro", null, 49));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Surname cannot be null or empty");
-    }
-
-    @Test
-    void shouldReturnExceptionSurnameNameEmpty() {
-        var exception = catchThrowable(() -> new User("Evandro", "", 49));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Surname cannot be null or empty");
     }
@@ -65,7 +61,6 @@ class UserTest {
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Surname must be at least 3 characters");
     }
-
 
     @Test
     void shouldReturnExceptionAgeUnder18() {
