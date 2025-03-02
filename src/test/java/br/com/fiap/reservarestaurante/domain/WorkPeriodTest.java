@@ -1,7 +1,6 @@
 package br.com.fiap.reservarestaurante.domain;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
