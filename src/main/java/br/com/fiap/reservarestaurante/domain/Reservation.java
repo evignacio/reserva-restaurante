@@ -6,14 +6,14 @@ import java.util.UUID;
 public class Reservation extends Entity<String> {
     private String idRestaurant;
     private String idUser;
-    private int numnerOfClients;
+    private int numberOfClients;
     private LocalDateTime date;
 
-    public Reservation(String idRestaurant, String idUser, int numnerOfClients, LocalDateTime date) {
+    public Reservation(String idRestaurant, String idUser, int numberOfClients, LocalDateTime date) {
         super(UUID.randomUUID().toString());
         setIdRestaurant(idRestaurant);
         setIdUser(idUser);
-        setNumnerOfClients(numnerOfClients);
+        setNumberOfClients(numberOfClients);
         setDate(date);
     }
 
@@ -39,15 +39,15 @@ public class Reservation extends Entity<String> {
         this.idUser = idUser;
     }
 
-    public int getNumnerOfClients() {
-        return numnerOfClients;
+    public int getNumberOfClients() {
+        return numberOfClients;
     }
 
-    public void setNumnerOfClients(int numnerOfClients) {
-        if (numnerOfClients <= 0 || numnerOfClients > 10)
+    public void setNumberOfClients(int numberOfClients) {
+        if (numberOfClients <= 0 || numberOfClients > 10)
             throw new IllegalArgumentException("NumnerOfClients must be between 1 and 10");
 
-        this.numnerOfClients = numnerOfClients;
+        this.numberOfClients = numberOfClients;
     }
 
     public LocalDateTime getDate() {

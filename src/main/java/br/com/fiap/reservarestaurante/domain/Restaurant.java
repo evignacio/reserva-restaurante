@@ -1,26 +1,34 @@
 package br.com.fiap.reservarestaurante.domain;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class Restaurant extends Entity<String> {
+    private final Set<WorkPeriod> workPeriods;
+    private final Set<Reservation> reservations;
+    private final Set<Review> reviews;
     private String name;
     private Address address;
     private int maxCapacity;
     private Category category;
-    private WorkPeriod workPeriod;
-    private Set<Reservation> reservations;
-    private Set<Review> reviews;
 
-    public Restaurant(String name, Address address, int maxCapacity, Category category, WorkPeriod workPeriod, Set<Reservation> reservations, Set<Review> reviews) {
-        super(UUID.randomUUID().toString());
+    public Restaurant(String name, Address address, int maxCapacity, Category category, Set<WorkPeriod> workPeriods) {
+        this();
         setName(name);
         setAddress(address);
         setMaxCapacity(maxCapacity);
         setCategory(category);
-        setWorkPeriod(workPeriod);
-        setReservations(reservations);
-        setReviews(reviews);
+        setWorkPeriod(workPeriods);
+
+    }
+
+    public Restaurant() {
+        super(UUID.randomUUID().toString());
+        this.workPeriods = new HashSet<>();
+        this.reservations = new HashSet<>();
+        this.reviews = new HashSet<>();
     }
 
     public String getName() {
@@ -67,36 +75,64 @@ public class Restaurant extends Entity<String> {
         this.category = category;
     }
 
-    public WorkPeriod getWorkPeriod() {
-        return workPeriod;
+    public Set<WorkPeriod> getWorkPeriods() {
+        return this.workPeriods;
     }
 
-    public void setWorkPeriod(WorkPeriod workPeriod) {
-        if (workPeriod == null)
-            throw new IllegalArgumentException("Work period cannot be null");
+    public void setWorkPeriod(Set<WorkPeriod> workPeriods) {
+        if (workPeriods == null)
+            throw new IllegalArgumentException("Work periods cannot be null");
 
-        this.workPeriod = workPeriod;
+        this.workPeriods.addAll(workPeriods);
     }
 
     public Set<Reservation> getReservations() {
         return reservations;
     }
 
-    public void setReservations(Set<Reservation> reservations) {
-        if (reservations == null)
+    public void addReservation(Reservation reservation) {
+        if (reservation == null)
             throw new IllegalArgumentException("Reservations cannot be null");
 
-        this.reservations = reservations;
+        var differenceOfDaysBetweenReservationAndNow = reservation.getDate().getDayOfMonth() - LocalDateTime.now().getDayOfMonth();
+        if (differenceOfDaysBetweenReservationAndNow < 0)
+            throw new IllegalArgumentException("Reservation date must be in the future");
+
+        if (differenceOfDaysBetweenReservationAndNow > 2)
+            throw new IllegalArgumentException("Reservation date must be made at most 2 days in advance");
+
+        var amountReservationForRequestDay = getReservations()
+                .stream()
+                .filter(r -> r.getDate().getDayOfMonth() == reservation.getDate().getDayOfMonth())
+                .map(Reservation::getNumberOfClients)
+                .reduce(0, Integer::sum);
+
+        if (amountReservationForRequestDay >= maxCapacity)
+            throw new IllegalArgumentException("The restaurant is full for the requested day");
+
+        var workPeriodValidForReservation = getWorkPeriods()
+                .stream()
+                .filter(w ->
+                        w.getDayOfWeek().equals(reservation.getDate().getDayOfWeek()) &&
+                                reservation.getDate().getHour() > w.getStartHour() &&
+                                reservation.getDate().getHour() < (w.getEndHour() - 1)
+                )
+                .findFirst();
+
+        if (workPeriodValidForReservation.isEmpty())
+            throw new IllegalArgumentException("Work period not found for the reservation date");
+
+        this.reservations.add(reservation);
     }
 
     public Set<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Set<Review> reviews) {
-        if (reviews == null)
-            throw new IllegalArgumentException("Reviews cannot be null");
+    public void addReview(Review review) {
+        if (review == null)
+            throw new IllegalArgumentException("Review cannot be null");
 
-        this.reviews = reviews;
+        this.reviews.add(review);
     }
 }

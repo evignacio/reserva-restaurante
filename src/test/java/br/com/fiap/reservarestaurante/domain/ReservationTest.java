@@ -18,7 +18,7 @@ class ReservationTest {
         assertThat(result).isNotNull();
         assertThat(result.getIdRestaurant()).isEqualTo("restaurantId");
         assertThat(result.getIdUser()).isEqualTo("userId");
-        assertThat(result.getNumnerOfClients()).isEqualTo(5);
+        assertThat(result.getNumberOfClients()).isEqualTo(5);
         assertThat(result.getDate()).isNotNull();
     }
 

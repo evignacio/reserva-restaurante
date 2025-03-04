@@ -1,44 +1,34 @@
 package br.com.fiap.reservarestaurante.domain;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 
 public class WorkPeriod {
-    private LocalDateTime startHour;
-    private LocalDateTime endHour;
     private DayOfWeek dayOfWeek;
+    private int startHour;
+    private int endHour;
 
-    public WorkPeriod(DayOfWeek dayOfWeek, LocalDateTime startHour, LocalDateTime endHour) {
-        if (startHour == null || endHour == null)
-            throw new IllegalArgumentException("Start and end hours cannot be null");
-
-        if (startHour.isAfter(endHour) || startHour.equals(endHour))
-            throw new IllegalArgumentException("Start hour cannot be after or equal end hour");
+    public WorkPeriod(DayOfWeek dayOfWeek, int startHour, int endHour) {
+        if (startHour >= endHour)
+            throw new IllegalArgumentException("Start hour cannot over or equal end hour");
 
         setDayOfWeek(dayOfWeek);
         setStartHour(startHour);
         setEndHour(endHour);
     }
 
-    public LocalDateTime getStartHour() {
+    public int getStartHour() {
         return startHour;
     }
 
-    private void setStartHour(LocalDateTime startHour) {
-        if (startHour.getDayOfWeek() != this.dayOfWeek)
-            throw new IllegalArgumentException("The day of start hour cannot be different of the day of the week");
-
+    private void setStartHour(int startHour) {
         this.startHour = startHour;
     }
 
-    public LocalDateTime getEndHour() {
+    public int getEndHour() {
         return endHour;
     }
 
-    private void setEndHour(LocalDateTime endHour) {
-        if (endHour.getDayOfWeek() != this.dayOfWeek)
-            throw new IllegalArgumentException("The day of end hour cannot be different of the day of the week");
-
+    private void setEndHour(int endHour) {
         this.endHour = endHour;
     }
 
