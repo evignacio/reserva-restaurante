@@ -1,4 +1,4 @@
-package br.com.fiap.reservarestaurante.domain;
+package br.com.fiap.reservarestaurante.core.domain;
 
 import java.time.DayOfWeek;
 

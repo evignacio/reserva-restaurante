@@ -1,4 +1,4 @@
-package br.com.fiap.reservarestaurante.domain;
+package br.com.fiap.reservarestaurante.core.domain;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

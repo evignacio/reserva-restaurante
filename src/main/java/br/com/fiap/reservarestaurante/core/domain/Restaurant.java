@@ -1,4 +1,4 @@
-package br.com.fiap.reservarestaurante.domain;
+package br.com.fiap.reservarestaurante.core.domain;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -21,7 +21,6 @@ public class Restaurant extends Entity<String> {
         setMaxCapacity(maxCapacity);
         setCategory(category);
         setWorkPeriod(workPeriods);
-
     }
 
     public Restaurant() {
