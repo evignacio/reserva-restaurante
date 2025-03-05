@@ -12,7 +12,7 @@ class UserTest {
 
     @Test
     void shouldCreateUser() {
-        var result = assertDoesNotThrow(() -> new User("Evandro", "Pastor", 49));
+        var result = assertDoesNotThrow(() -> new User("Evandro", "Pastor", 49, "evandro@email.com.br"));
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo("Evandro");
         assertThat(result.getSurname()).isEqualTo("Pastor");
@@ -21,7 +21,7 @@ class UserTest {
 
     @Test
     void shuldReturnFullName() {
-        var result = assertDoesNotThrow(() -> new User("Evandro", "Pastor", 49));
+        var result = assertDoesNotThrow(() -> new User("Evandro", "Pastor", 49, "evandro@email.com.br"));
         assertThat(result.getFullName()).isEqualTo("Evandro Pastor");
     }
 
@@ -31,14 +31,14 @@ class UserTest {
     }, nullValues = {"null"})
     @ParameterizedTest
     void shouldReturnExceptionFistNameNullOrEmpty(String name) {
-        var exception = catchThrowable(() -> new User(name, "Pastor", 49));
+        var exception = catchThrowable(() -> new User(name, "Pastor", 49, "evandro@email.com.br"));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Name cannot be null or empty");
     }
 
     @Test
     void shouldReturnExceptionFistNameInvalid() {
-        var exception = catchThrowable(() -> new User("EV", "Pastor", 49));
+        var exception = catchThrowable(() -> new User("EV", "Pastor", 49, "evandro@email.com.br"));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Name must be at least 3 characters");
     }
@@ -50,30 +50,37 @@ class UserTest {
     }, nullValues = {"null"})
     @ParameterizedTest
     void shouldReturnExceptionSurnameNameNullOrEmpty() {
-        var exception = catchThrowable(() -> new User("Evandro", null, 49));
+        var exception = catchThrowable(() -> new User("Evandro", null, 49, "evandro@email.com.br"));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Surname cannot be null or empty");
     }
 
     @Test
     void shouldReturnExceptionSurnameNameInvalid() {
-        var exception = catchThrowable(() -> new User("Evandro", "Pa", 49));
+        var exception = catchThrowable(() -> new User("Evandro", "Pa", 49, "evandro@email.com.br"));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Surname must be at least 3 characters");
     }
 
     @Test
     void shouldReturnExceptionAgeUnder18() {
-        var exception = catchThrowable(() -> new User("Evandro", "Pastor", 17));
+        var exception = catchThrowable(() -> new User("Evandro", "Pastor", 17, "evandro@email.com.br"));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Age must be at least 18");
     }
 
     @Test
     void shouldReturnExceptionAgeOver100() {
-        var exception = catchThrowable(() -> new User("Evandro", "Pastor", 400));
+        var exception = catchThrowable(() -> new User("Evandro", "Pastor", 400, "evandro@email.com.br"));
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getMessage()).isEqualTo("Age must be at most 100");
+    }
+
+    @Test
+    void shouldReturnExceptionInvalidEmail() {
+        var exception = catchThrowable(() -> new User("Evandro", "Pastor", 40, "evandroemail.com.br"));
+        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+        assertThat(exception.getMessage()).isEqualTo("Invalid e-mail, should be [A-Za-z0-9+_.-]+@[A-Za-z0-9.-]");
     }
 
 }
