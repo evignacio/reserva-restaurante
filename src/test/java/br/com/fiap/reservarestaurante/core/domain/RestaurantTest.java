@@ -192,6 +192,72 @@ class RestaurantTest {
         assertThat(exception.getMessage()).isEqualTo("Work period not found for the reservation date");
     }
 
+    @Test
+    void shouldReturnFullCapacityWhenNoReservations() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+
+        int availableReservations = restaurant.getAmountOfReservationsAvailableForDay(LocalDateTime.now());
+        assertThat(availableReservations).isEqualTo(50);
+    }
+
+    @Test
+    void shouldReturnReducedCapacityWhenReservationsExist() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+        Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().withHour(12));
+        restaurant.addReservation(reservation);
+
+        int availableReservations = restaurant.getAmountOfReservationsAvailableForDay(LocalDateTime.now());
+        assertThat(availableReservations).isEqualTo(45);
+    }
+
+    @Test
+    void shouldReturnFullCapacityForDifferentDay() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+        Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().plusDays(1).withHour(12));
+        restaurant.addReservation(reservation);
+
+        int availableReservations = restaurant.getAmountOfReservationsAvailableForDay(LocalDateTime.now());
+        assertThat(availableReservations).isEqualTo(50);
+    }
+
+    @Test
+    void shouldReturnTrueWhenRestaurantIsOpen() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+
+        boolean isOpen = restaurant.isOpen(LocalDateTime.now().withHour(10));
+        assertThat(isOpen).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseWhenRestaurantIsClosed() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+
+        boolean isOpen = restaurant.isOpen(LocalDateTime.now().withHour(23));
+        assertThat(isOpen).isFalse();
+    }
+
+    @Test
+    void shouldReturnFalseWhenNoWorkPeriodForDay() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Set<WorkPeriod> workPeriods = new HashSet<>();
+        workPeriods.add(new WorkPeriod(DayOfWeek.MONDAY, 9, 22));
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
+
+        boolean isOpen = restaurant.isOpen(LocalDateTime.now().with(DayOfWeek.TUESDAY).withHour(10));
+        assertThat(isOpen).isFalse();
+    }
+
     private Set<WorkPeriod> getFullWeekWorkPeriod(int startHour, int endHour) {
         var workPeriods = new HashSet<WorkPeriod>();
         workPeriods.add(new WorkPeriod(DayOfWeek.MONDAY, startHour, endHour));
@@ -199,6 +265,8 @@ class RestaurantTest {
         workPeriods.add(new WorkPeriod(DayOfWeek.WEDNESDAY, startHour, endHour));
         workPeriods.add(new WorkPeriod(DayOfWeek.THURSDAY, startHour, endHour));
         workPeriods.add(new WorkPeriod(DayOfWeek.FRIDAY, startHour, endHour));
+        workPeriods.add(new WorkPeriod(DayOfWeek.SATURDAY, startHour, endHour));
+        workPeriods.add(new WorkPeriod(DayOfWeek.SUNDAY, startHour, endHour));
         return workPeriods;
     }
 }
