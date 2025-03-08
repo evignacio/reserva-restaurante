@@ -91,7 +91,7 @@ public class Restaurant extends Entity<String> {
 
     public void addReservation(Reservation reservation) {
         if (reservation == null)
-            throw new IllegalArgumentException("Reservations cannot be null");
+            throw new IllegalArgumentException("Reservation cannot be null");
 
         var differenceOfDaysBetweenReservationAndNow = reservation.getDate().getDayOfMonth() - LocalDateTime.now().getDayOfMonth();
         if (differenceOfDaysBetweenReservationAndNow < 0)

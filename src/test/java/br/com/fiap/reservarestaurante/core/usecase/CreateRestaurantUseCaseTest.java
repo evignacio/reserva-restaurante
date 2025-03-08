@@ -64,8 +64,10 @@ class CreateRestaurantUseCaseTest {
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(false);
 
         var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurant));
-        assertThat(exception).isInstanceOf(IllegalStateException.class);
-        assertThat(exception.getMessage()).isEqualTo("Name restaurant not available");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Name restaurant not available");
     }
 
     @Test
@@ -80,7 +82,9 @@ class CreateRestaurantUseCaseTest {
         when(categoryGateway.findById(category.getId())).thenReturn(Optional.empty());
 
         var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurant));
-        assertThat(exception).isInstanceOf(IllegalStateException.class);
-        assertThat(exception.getMessage()).isEqualTo("Category not found");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Category not found");
     }
 }

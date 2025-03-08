@@ -29,15 +29,19 @@ class ReservationTest {
     @ParameterizedTest
     void shouldReturnExceptionIdRestaurantNullOrEmpty(String idRestaurant) {
         var exception = catchThrowable(() -> new Reservation(idRestaurant, "userId", 5, LocalDateTime.now()));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("IdRestaurant cannot be null or empty");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("IdRestaurant cannot be null or empty");
     }
 
     @Test
     void shouldReturnExceptionIdUserNull() {
         var exception = catchThrowable(() -> new Reservation("restaurantId", null, 5, LocalDateTime.now()));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("IdUser cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("IdUser cannot be null");
     }
 
     @CsvSource({
@@ -47,14 +51,18 @@ class ReservationTest {
     @ParameterizedTest
     void shouldReturnExceptionNumnerOfClientsInvalid(int numnerOfClients) {
         var exception = catchThrowable(() -> new Reservation("restaurantId", "userId", numnerOfClients, LocalDateTime.now()));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("NumnerOfClients must be between 1 and 10");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("NumnerOfClients must be between 1 and 10");
     }
 
     @Test
     void shouldReturnExceptionDateNull() {
         var exception = catchThrowable(() -> new Reservation("restaurantId", "userId", 5, null));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Date cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Date cannot be null");
     }
 }
