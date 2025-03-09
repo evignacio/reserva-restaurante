@@ -14,4 +14,5 @@ public interface RestaurantGateway {
     Set<Restaurant> find(String name, String categoryId, Address address);
 
     Optional<Restaurant> findById(String id);
+    void delete(String id);
 }

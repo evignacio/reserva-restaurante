@@ -42,7 +42,7 @@ class CreateUserUseCaseTest {
     }
 
     @Test
-    void shouldReturnExceptionNameRestaurantNotAvailable() {
+    void shouldReturnExceptionUserEmailNotAvailable() {
         var name = "Evandro";
         var surname = "Pastor";
         var age = 49;

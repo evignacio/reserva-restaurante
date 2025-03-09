@@ -42,7 +42,7 @@ class DeleteUserUseCaseTest {
     }
 
     @Test
-    void shouldReturnExceptionNameRestaurantNotAvailable() {
+    void shouldReturnExceptionUserNotFound() {
         var id = UUID.randomUUID().toString();
         when(userGateway.findById(id)).thenReturn(Optional.empty());
         var exception = catchThrowable(() -> deleteUserUseCase.execute(id));
