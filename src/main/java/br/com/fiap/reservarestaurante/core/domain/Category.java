@@ -11,6 +11,11 @@ public class Category extends Entity<String> {
         setName(name);
     }
 
+    public Category(String id, String name) {
+        super(id);
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
