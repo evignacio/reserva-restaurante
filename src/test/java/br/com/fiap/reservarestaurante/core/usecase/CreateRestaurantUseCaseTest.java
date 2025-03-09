@@ -2,8 +2,8 @@ package br.com.fiap.reservarestaurante.core.usecase;
 
 import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Category;
-import br.com.fiap.reservarestaurante.core.domain.Restaurant;
 import br.com.fiap.reservarestaurante.core.domain.WorkPeriod;
+import br.com.fiap.reservarestaurante.core.dto.CreateRestaurantDTO;
 import br.com.fiap.reservarestaurante.core.gateway.CategoryGateway;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 import org.junit.jupiter.api.Test;
@@ -39,12 +39,12 @@ class CreateRestaurantUseCaseTest {
         Category category = new Category("Italian");
         WorkPeriod workPeriod = new WorkPeriod(DayOfWeek.MONDAY, 9, 22);
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
-        var restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
+        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getId(), address, 50, workPeriods);
 
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(true);
         when(categoryGateway.findById(category.getId())).thenReturn(Optional.of(category));
 
-        var result = assertDoesNotThrow(() -> createRestaurantUseCase.execute(restaurant));
+        var result = assertDoesNotThrow(() -> createRestaurantUseCase.execute(restaurantDTO));
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo("Restaurant Name");
         assertThat(result.getAddress()).isEqualTo(address);
@@ -59,13 +59,15 @@ class CreateRestaurantUseCaseTest {
         Category category = new Category("Italian");
         WorkPeriod workPeriod = new WorkPeriod(DayOfWeek.MONDAY, 9, 22);
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
-        var restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
+        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getId(), address, 50, workPeriods);
 
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(false);
 
-        var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurant));
-        assertThat(exception).isInstanceOf(IllegalStateException.class);
-        assertThat(exception.getMessage()).isEqualTo("Name restaurant not available");
+        var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurantDTO));
+
+        assertThat(exception)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Name restaurant not available");
     }
 
     @Test
@@ -74,13 +76,15 @@ class CreateRestaurantUseCaseTest {
         Category category = new Category("Italian");
         WorkPeriod workPeriod = new WorkPeriod(DayOfWeek.MONDAY, 9, 22);
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
-        var restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
+        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getId(), address, 50, workPeriods);
 
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(true);
         when(categoryGateway.findById(category.getId())).thenReturn(Optional.empty());
 
-        var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurant));
-        assertThat(exception).isInstanceOf(IllegalStateException.class);
-        assertThat(exception.getMessage()).isEqualTo("Category not found");
+        var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurantDTO));
+
+        assertThat(exception)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Category not found");
     }
 }

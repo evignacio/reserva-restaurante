@@ -17,11 +17,8 @@ public class Review extends Entity<String> {
         setContent(content);
     }
 
-    private void setIdRestaurant(String idRestaurant) {
-        if (idRestaurant == null)
-            throw new IllegalArgumentException("IdRestaurant cannot be null");
-
-        this.idRestaurant = idRestaurant;
+    public String getIdUser() {
+        return idUser;
     }
 
     private void setIdUser(String idUser) {
@@ -31,11 +28,30 @@ public class Review extends Entity<String> {
         this.idUser = idUser;
     }
 
+    public String getIdRestaurant() {
+        return idRestaurant;
+    }
+
+    private void setIdRestaurant(String idRestaurant) {
+        if (idRestaurant == null)
+            throw new IllegalArgumentException("IdRestaurant cannot be null");
+
+        this.idRestaurant = idRestaurant;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
     public void setRating(int rating) {
         if (rating < 1 || rating > 5)
             throw new IllegalArgumentException("Rating must be between 1 and 5");
 
         this.rating = rating;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public void setContent(String content) {

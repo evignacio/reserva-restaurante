@@ -19,8 +19,9 @@ class WorkPeriodTest {
     void shouldReturnExceptionDayOfWeekNull() {
         var exception = catchException(() -> new WorkPeriod(null, 10, 21));
 
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("dayOfWeek cannot be null");
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("dayOfWeek cannot be null");
     }
 
 
@@ -28,15 +29,17 @@ class WorkPeriodTest {
     void shouldReturnExceptionStartHourAfterEndHour() {
         var exception = catchException(() -> new WorkPeriod(DayOfWeek.MONDAY, 21, 10));
 
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Start hour cannot over or equal end hour");
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Start hour cannot over or equal end hour");
     }
 
     @Test
     void shouldReturnExceptionStartHourEqualEndHour() {
         var exception = catchException(() -> new WorkPeriod(DayOfWeek.MONDAY, 21, 21));
 
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Start hour cannot over or equal end hour");
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Start hour cannot over or equal end hour");
     }
 }

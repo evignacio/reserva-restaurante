@@ -1,6 +1,7 @@
 package br.com.fiap.reservarestaurante.core.usecase;
 
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
+import br.com.fiap.reservarestaurante.core.dto.CreateRestaurantDTO;
 import br.com.fiap.reservarestaurante.core.gateway.CategoryGateway;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 
@@ -14,12 +15,22 @@ public class CreateRestaurantUseCase {
         this.categoryGateway = categoryGateway;
     }
 
-    public Restaurant execute(Restaurant restaurant) {
-        if (!restaurantGateway.nameIsAvailable(restaurant.getName()))
+    public Restaurant execute(CreateRestaurantDTO restaurantDTO) {
+        if (!restaurantGateway.nameIsAvailable(restaurantDTO.name()))
             throw new IllegalStateException("Name restaurant not available");
 
-        if (categoryGateway.findById(restaurant.getCategory().getId()).isEmpty())
+        var categoryOpt = categoryGateway.findById(restaurantDTO.categoryId());
+        if (categoryOpt.isEmpty())
             throw new IllegalStateException("Category not found");
+
+        var category = categoryOpt.get();
+
+        var restaurant = new Restaurant(
+                restaurantDTO.name(),
+                restaurantDTO.address(),
+                restaurantDTO.maxCapacity(),
+                category,
+                restaurantDTO.workPeriods());
 
         restaurantGateway.save(restaurant);
         return restaurant;
