@@ -4,4 +4,5 @@ import br.com.fiap.reservarestaurante.core.infrastructure.repository.model.Resta
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface RestaurantRepository extends MongoRepository<RestaurantModel, String> {
+    boolean existsByName(String name);
 }

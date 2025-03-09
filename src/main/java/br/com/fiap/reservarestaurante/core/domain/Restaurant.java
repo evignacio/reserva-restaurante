@@ -14,8 +14,17 @@ public class Restaurant extends Entity<String> {
     private final Set<Reservation> reservations;
     private final Set<Review> reviews;
 
+
+    public Restaurant(String id) {
+        super(id);
+        this.workPeriods = new HashSet<>();
+        this.reservations = new HashSet<>();
+        this.reviews = new HashSet<>();
+    }
+
+
     public Restaurant(String name, Address address, int maxCapacity, Category category, Set<WorkPeriod> workPeriods) {
-        this();
+        this(UUID.randomUUID().toString());
         setName(name);
         setAddress(address);
         setMaxCapacity(maxCapacity);
@@ -23,11 +32,15 @@ public class Restaurant extends Entity<String> {
         setWorkPeriod(workPeriods);
     }
 
-    public Restaurant() {
-        super(UUID.randomUUID().toString());
-        this.workPeriods = new HashSet<>();
-        this.reservations = new HashSet<>();
-        this.reviews = new HashSet<>();
+    public Restaurant(String id, String name, Address address, int maxCapacity, Category category, Set<WorkPeriod> workPeriods, Set<Reservation> reservations, Set<Review> reviews) {
+        this(id);
+        setName(name);
+        setAddress(address);
+        setMaxCapacity(maxCapacity);
+        setCategory(category);
+        setWorkPeriod(workPeriods);
+        setReservations(reservations);
+        setReviews(reviews);
     }
 
     public String getName() {
@@ -89,6 +102,13 @@ public class Restaurant extends Entity<String> {
         return reservations;
     }
 
+    private void setReservations(Set<Reservation> reservations) {
+        if (reservations == null)
+            throw new IllegalArgumentException("Reservations cannot be null");
+
+        this.reservations.addAll(reservations);
+    }
+
     public void addReservation(Reservation reservation) {
         if (reservation == null)
             throw new IllegalArgumentException("Reservation cannot be null");
@@ -138,6 +158,13 @@ public class Restaurant extends Entity<String> {
 
     public Set<Review> getReviews() {
         return reviews;
+    }
+
+    private void setReviews(Set<Review> reviews) {
+        if (reviews == null)
+            throw new IllegalArgumentException("Reviews cannot be null");
+
+        this.reviews.addAll(reviews);
     }
 
     public void addReview(Review review) {
