@@ -14,7 +14,7 @@ import java.util.UUID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DeleteRestaurantUseCaseTest {
@@ -33,6 +33,7 @@ class DeleteRestaurantUseCaseTest {
         when(restaurantGateway.findById(id)).thenReturn(Optional.of(restaurant));
 
         assertDoesNotThrow(() -> deleteRestaurantUseCase.execute(id));
+        verify(restaurantGateway, times(1)).delete(anyString());
     }
 
 
@@ -47,5 +48,6 @@ class DeleteRestaurantUseCaseTest {
         assertThat(exception)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("Restaurant not found");
+        verify(restaurantGateway, times(0)).delete(id);
     }
 }
