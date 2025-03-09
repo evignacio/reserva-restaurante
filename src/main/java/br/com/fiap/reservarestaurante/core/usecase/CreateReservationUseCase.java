@@ -13,11 +13,6 @@ public class CreateReservationUseCase {
     }
 
     public ReservationDTO execute(ReservationDTO reservationDTO) {
-        if (reservationGateway.isLessThanTwoDaysBefore(reservationDTO.date()))
-            throw new IllegalStateException("Reservation date is greater than two days in advance");
-
-        if (!reservationGateway.isDateAvailable(reservationDTO.date(), reservationDTO.idRestaurant(), reservationDTO.numberOfClients()))
-            throw new IllegalStateException("Reservation date not available");
         var reservation = new Reservation(reservationDTO.idRestaurant(), reservationDTO.idUser(), reservationDTO.numberOfClients(), reservationDTO.date());
         reservationGateway.save(reservation);
         return reservationDTO;
