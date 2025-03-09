@@ -8,6 +8,7 @@ public interface UserGateway {
     boolean isEmailAvailable(String email);
 
     Optional<User> findById(String id);
+    void delete(String id);
 
     void save(User user);
 }
