@@ -18,7 +18,7 @@ class ReservationTest {
         assertThat(result).isNotNull();
         assertThat(result.getIdRestaurant()).isEqualTo("restaurantId");
         assertThat(result.getIdUser()).isEqualTo("userId");
-        assertThat(result.getNumberOfClients()).isEqualTo(5);
+        assertThat(result.getAmountOfTables()).isEqualTo(5);
         assertThat(result.getDate()).isNotNull();
     }
 
@@ -46,7 +46,7 @@ class ReservationTest {
 
     @CsvSource({
             "0",
-            "11"
+            "6"
     })
     @ParameterizedTest
     void shouldReturnExceptionNumnerOfClientsInvalid(int numnerOfClients) {
@@ -54,7 +54,7 @@ class ReservationTest {
 
         assertThat(exception)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("NumnerOfClients must be between 1 and 10");
+                .hasMessage("AmountOfTables must be between 1 and 5");
     }
 
     @Test

@@ -122,7 +122,7 @@ public class Restaurant extends Entity<String> {
         return getMaxCapacity() - getReservations()
                 .stream()
                 .filter(r -> r.getDate().getDayOfMonth() == date.getDayOfMonth())
-                .map(Reservation::getNumberOfClients)
+                .map(Reservation::getAmountOfTables)
                 .reduce(0, Integer::sum);
     }
 
