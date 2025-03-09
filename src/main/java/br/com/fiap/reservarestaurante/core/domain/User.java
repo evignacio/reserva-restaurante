@@ -1,17 +1,40 @@
 package br.com.fiap.reservarestaurante.core.domain;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class User extends Entity<String> {
     private String name;
     private String surname;
     private int age;
+    private String email;
 
-    public User(String name, String surname, int age) {
+    public User(String name, String surname, int age, String email) {
         super(UUID.randomUUID().toString());
         setName(name);
         setSurname(surname);
         setAge(age);
+        setEmail(email);
+    }
+
+    public void setEmail(String email) throws IllegalArgumentException {
+        if (isValidEmail(email)) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Invalid e-mail, should be [A-Za-z0-9+_.-]+@[A-Za-z0-9.-]");
+        }
+    }
+
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getAge() {
