@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Restaurant extends Entity<String> {
-    private final Set<WorkPeriod> workPeriods;
-    private final Set<Reservation> reservations;
-    private final Set<Review> reviews;
     private String name;
     private Address address;
     private int maxCapacity;
     private Category category;
+    private final Set<WorkPeriod> workPeriods;
+    private final Set<Reservation> reservations;
+    private final Set<Review> reviews;
 
     public Restaurant(String name, Address address, int maxCapacity, Category category, Set<WorkPeriod> workPeriods) {
         this();
