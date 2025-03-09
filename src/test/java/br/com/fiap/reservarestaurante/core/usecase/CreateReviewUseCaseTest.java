@@ -32,8 +32,9 @@ class CreateReviewUseCaseTest {
 
     @Test
     void shouldCreateReview() {
+        var email = "evandro@email.com.br";
         var review = new Review("userId", "restaurantId", 5, "Great restaurant");
-        var user = new User("userId", "User Name", 24);
+        var user = new User("userId", "User Name", 24, email);
         var address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
         var workPeriod = new WorkPeriod(DayOfWeek.WEDNESDAY, 10, 22);
         var restaurant = new Restaurant("Restaurant Name", address, 50, new Category("Italian"), Set.of(workPeriod));
@@ -59,7 +60,8 @@ class CreateReviewUseCaseTest {
 
     @Test
     void shouldReturnExceptionRestaurantNotFound() {
-        var user = new User("userId", "User Name", 24);
+        var email = "evandro@email.com.br";
+        var user = new User("userId", "User Name", 24, email);
         var review = new Review("userId", "restaurantId", 5, "Great restaurant");
 
         when(userGateway.findById(review.getIdUser())).thenReturn(Optional.of(user));
