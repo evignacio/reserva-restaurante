@@ -18,7 +18,7 @@ class ReservationTest {
         assertThat(result).isNotNull();
         assertThat(result.getIdRestaurant()).isEqualTo("restaurantId");
         assertThat(result.getIdUser()).isEqualTo("userId");
-        assertThat(result.getNumberOfClients()).isEqualTo(5);
+        assertThat(result.getAmountOfTables()).isEqualTo(5);
         assertThat(result.getDate()).isNotNull();
     }
 
@@ -29,32 +29,40 @@ class ReservationTest {
     @ParameterizedTest
     void shouldReturnExceptionIdRestaurantNullOrEmpty(String idRestaurant) {
         var exception = catchThrowable(() -> new Reservation(idRestaurant, "userId", 5, LocalDateTime.now()));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("IdRestaurant cannot be null or empty");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("IdRestaurant cannot be null or empty");
     }
 
     @Test
     void shouldReturnExceptionIdUserNull() {
         var exception = catchThrowable(() -> new Reservation("restaurantId", null, 5, LocalDateTime.now()));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("IdUser cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("IdUser cannot be null");
     }
 
     @CsvSource({
             "0",
-            "11"
+            "6"
     })
     @ParameterizedTest
     void shouldReturnExceptionNumnerOfClientsInvalid(int numnerOfClients) {
         var exception = catchThrowable(() -> new Reservation("restaurantId", "userId", numnerOfClients, LocalDateTime.now()));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("NumnerOfClients must be between 1 and 10");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("AmountOfTables must be between 1 and 5");
     }
 
     @Test
     void shouldReturnExceptionDateNull() {
         var exception = catchThrowable(() -> new Reservation("restaurantId", "userId", 5, null));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Date cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Date cannot be null");
     }
 }

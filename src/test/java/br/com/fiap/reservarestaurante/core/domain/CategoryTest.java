@@ -17,21 +17,25 @@ class CategoryTest {
         assertThat(result.getName()).isEqualTo("Japonesa");
     }
 
-  @CsvSource(value = {
-          "null",
-          "''"
-  }, nullValues = {"null"})
+    @CsvSource(value = {
+            "null",
+            "''"
+    }, nullValues = {"null"})
     @ParameterizedTest
     void shouldReturnExceptionNameNullOrEmpty(String name) {
-        var exception =  catchThrowable(() -> new Category(name));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Name cannot be null or empty");
+        var exception = catchThrowable(() -> new Category(name));
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Name cannot be null or empty");
     }
 
     @Test
     void shouldReturnExceptionNameInvalid() {
-        var exception =  catchThrowable(() -> new Category("JA"));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Name must be at least 3 characters");
+        var exception = catchThrowable(() -> new Category("JA"));
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Name must be at least 3 characters");
     }
 }

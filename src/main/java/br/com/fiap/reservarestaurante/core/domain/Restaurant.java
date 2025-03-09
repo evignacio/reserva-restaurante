@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Restaurant extends Entity<String> {
-    private final Set<WorkPeriod> workPeriods;
-    private final Set<Reservation> reservations;
-    private final Set<Review> reviews;
     private String name;
     private Address address;
     private int maxCapacity;
     private Category category;
+    private final Set<WorkPeriod> workPeriods;
+    private final Set<Reservation> reservations;
+    private final Set<Review> reviews;
 
     public Restaurant(String name, Address address, int maxCapacity, Category category, Set<WorkPeriod> workPeriods) {
         this();
@@ -91,7 +91,7 @@ public class Restaurant extends Entity<String> {
 
     public void addReservation(Reservation reservation) {
         if (reservation == null)
-            throw new IllegalArgumentException("Reservations cannot be null");
+            throw new IllegalArgumentException("Reservation cannot be null");
 
         var differenceOfDaysBetweenReservationAndNow = reservation.getDate().getDayOfMonth() - LocalDateTime.now().getDayOfMonth();
         if (differenceOfDaysBetweenReservationAndNow < 0)
@@ -100,13 +100,7 @@ public class Restaurant extends Entity<String> {
         if (differenceOfDaysBetweenReservationAndNow > 2)
             throw new IllegalArgumentException("Reservation date must be made at most 2 days in advance");
 
-        var amountReservationForRequestDay = getReservations()
-                .stream()
-                .filter(r -> r.getDate().getDayOfMonth() == reservation.getDate().getDayOfMonth())
-                .map(Reservation::getNumberOfClients)
-                .reduce(0, Integer::sum);
-
-        if (amountReservationForRequestDay >= maxCapacity)
+        if (getAmountOfReservationsAvailableForDay(reservation.getDate()) <= 0)
             throw new IllegalArgumentException("The restaurant is full for the requested day");
 
         var workPeriodValidForReservation = getWorkPeriods()
@@ -122,6 +116,24 @@ public class Restaurant extends Entity<String> {
             throw new IllegalArgumentException("Work period not found for the reservation date");
 
         this.reservations.add(reservation);
+    }
+
+    public int getAmountOfReservationsAvailableForDay(LocalDateTime date) {
+        return getMaxCapacity() - getReservations()
+                .stream()
+                .filter(r -> r.getDate().getDayOfMonth() == date.getDayOfMonth())
+                .map(Reservation::getAmountOfTables)
+                .reduce(0, Integer::sum);
+    }
+
+    public boolean isOpen(LocalDateTime date) {
+        return getWorkPeriods()
+                .stream()
+                .anyMatch(w ->
+                        w.getDayOfWeek().equals(date.getDayOfWeek()) &&
+                                date.getHour() > w.getStartHour() &&
+                                date.getHour() < w.getEndHour()
+                );
     }
 
     public Set<Review> getReviews() {

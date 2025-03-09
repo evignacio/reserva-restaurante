@@ -18,15 +18,19 @@ class ReviewTest {
     @Test
     void shouldReturnExceptionIdRestaurantNull() {
         var exception = catchException(() -> new Review(null, "xpto2", 5, "Test review"));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("IdRestaurant cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("IdRestaurant cannot be null");
     }
 
     @Test
     void shouldReturnExceptionIdUserNull() {
         var exception = catchException(() -> new Review("xpto", null, 5, "Test review"));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("IdUser cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("IdUser cannot be null");
     }
 
     @CsvSource({
@@ -37,8 +41,10 @@ class ReviewTest {
     @ParameterizedTest
     void shouldReturnExceptionInvalidRating(int rating) {
         var exception = catchException(() -> new Review("xpto", "xpto2", rating, "Test review"));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Rating must be between 1 and 5");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Rating must be between 1 and 5");
     }
 
     @CsvSource(value = {
@@ -48,8 +54,10 @@ class ReviewTest {
     @ParameterizedTest
     void shouldReturnExceptionContentNullOrEmpty(String content) {
         var exception = catchException(() -> new Review("xpto", "xpto2", 5, content));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Content cannot be null or empty");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Content cannot be null or empty");
     }
 
     @CsvSource(value = {
@@ -70,7 +78,9 @@ class ReviewTest {
     @ParameterizedTest
     void shouldReturnExceptionInvalidContent(String content) {
         var exception = catchException(() -> new Review("xpto", "xpto2", 5, content));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Content length must be between 5 and 255");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Content length must be between 5 and 255");
     }
 }

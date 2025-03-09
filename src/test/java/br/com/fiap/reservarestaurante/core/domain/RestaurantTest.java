@@ -43,8 +43,10 @@ class RestaurantTest {
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
 
         var exception = catchThrowable(() -> new Restaurant(name, address, 50, category, workPeriods));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Name cannot be null or empty");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Name cannot be null or empty");
     }
 
     @Test
@@ -54,8 +56,10 @@ class RestaurantTest {
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
 
         var exception = catchThrowable(() -> new Restaurant("Restaurant Name", null, 50, category, workPeriods));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Address cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Address cannot be null");
     }
 
     @CsvSource({
@@ -70,8 +74,10 @@ class RestaurantTest {
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
 
         var exception = catchThrowable(() -> new Restaurant("Restaurant Name", address, maxCapacity, category, workPeriods));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Max capacity cannot be less than 1");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Max capacity cannot be less than 1");
     }
 
     @Test
@@ -81,8 +87,10 @@ class RestaurantTest {
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
 
         var exception = catchThrowable(() -> new Restaurant("Restaurant Name", address, 50, null, workPeriods));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Category cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Category cannot be null");
     }
 
     @Test
@@ -91,8 +99,10 @@ class RestaurantTest {
         Category category = new Category("Italian");
 
         var exception = catchThrowable(() -> new Restaurant("Restaurant Name", address, 50, category, null));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Work periods cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Work periods cannot be null");
     }
 
     @Test
@@ -106,8 +116,10 @@ class RestaurantTest {
             Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
             restaurant.addReservation(null);
         });
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Reservations cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Reservation cannot be null");
     }
 
     @Test
@@ -121,8 +133,10 @@ class RestaurantTest {
             Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
             restaurant.addReview(null);
         });
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Review cannot be null");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Review cannot be null");
     }
 
     @Test
@@ -146,8 +160,10 @@ class RestaurantTest {
         Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().minusDays(1));
 
         var exception = catchThrowable(() -> restaurant.addReservation(reservation));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Reservation date must be in the future");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Reservation date must be in the future");
     }
 
     @Test
@@ -160,8 +176,10 @@ class RestaurantTest {
         Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().plusDays(3));
 
         var exception = catchThrowable(() -> restaurant.addReservation(reservation));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Reservation date must be made at most 2 days in advance");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Reservation date must be made at most 2 days in advance");
     }
 
     @Test
@@ -174,8 +192,10 @@ class RestaurantTest {
         restaurant.addReservation(reservation1);
 
         var exception = catchThrowable(() -> restaurant.addReservation(reservation2));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("The restaurant is full for the requested day");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The restaurant is full for the requested day");
     }
 
     @Test
@@ -188,8 +208,76 @@ class RestaurantTest {
         Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().plusDays(1).withHour(23));
 
         var exception = catchThrowable(() -> restaurant.addReservation(reservation));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("Work period not found for the reservation date");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Work period not found for the reservation date");
+    }
+
+    @Test
+    void shouldReturnFullCapacityWhenNoReservations() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+
+        int availableReservations = restaurant.getAmountOfReservationsAvailableForDay(LocalDateTime.now());
+        assertThat(availableReservations).isEqualTo(50);
+    }
+
+    @Test
+    void shouldReturnReducedCapacityWhenReservationsExist() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+        Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().withHour(12));
+        restaurant.addReservation(reservation);
+
+        int availableReservations = restaurant.getAmountOfReservationsAvailableForDay(LocalDateTime.now());
+        assertThat(availableReservations).isEqualTo(45);
+    }
+
+    @Test
+    void shouldReturnFullCapacityForDifferentDay() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+        Reservation reservation = new Reservation("restaurantId", "userId", 5, LocalDateTime.now().plusDays(1).withHour(12));
+        restaurant.addReservation(reservation);
+
+        int availableReservations = restaurant.getAmountOfReservationsAvailableForDay(LocalDateTime.now());
+        assertThat(availableReservations).isEqualTo(50);
+    }
+
+    @Test
+    void shouldReturnTrueWhenRestaurantIsOpen() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+
+        boolean isOpen = restaurant.isOpen(LocalDateTime.now().withHour(10));
+        assertThat(isOpen).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseWhenRestaurantIsClosed() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, getFullWeekWorkPeriod(9, 22));
+
+        boolean isOpen = restaurant.isOpen(LocalDateTime.now().withHour(23));
+        assertThat(isOpen).isFalse();
+    }
+
+    @Test
+    void shouldReturnFalseWhenNoWorkPeriodForDay() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Set<WorkPeriod> workPeriods = new HashSet<>();
+        workPeriods.add(new WorkPeriod(DayOfWeek.MONDAY, 9, 22));
+        Restaurant restaurant = new Restaurant("Restaurant Name", address, 50, category, workPeriods);
+
+        boolean isOpen = restaurant.isOpen(LocalDateTime.now().with(DayOfWeek.TUESDAY).withHour(10));
+        assertThat(isOpen).isFalse();
     }
 
     private Set<WorkPeriod> getFullWeekWorkPeriod(int startHour, int endHour) {
@@ -199,6 +287,8 @@ class RestaurantTest {
         workPeriods.add(new WorkPeriod(DayOfWeek.WEDNESDAY, startHour, endHour));
         workPeriods.add(new WorkPeriod(DayOfWeek.THURSDAY, startHour, endHour));
         workPeriods.add(new WorkPeriod(DayOfWeek.FRIDAY, startHour, endHour));
+        workPeriods.add(new WorkPeriod(DayOfWeek.SATURDAY, startHour, endHour));
+        workPeriods.add(new WorkPeriod(DayOfWeek.SUNDAY, startHour, endHour));
         return workPeriods;
     }
 }

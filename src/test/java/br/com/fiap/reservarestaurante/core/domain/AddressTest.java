@@ -87,14 +87,18 @@ class AddressTest {
     @ParameterizedTest
     void shouldReturnExceptionZipCodeNullOrEmpty(String zipCode) {
         var exception = catchThrowable(() -> new Address("São Paulo", "SP", "Brazil", "Rua A", 123, zipCode));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("ZipCode cannot be null or empty");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("ZipCode cannot be null or empty");
     }
 
     @Test
     void shouldReturnExceptionZipCodeInvalidLength() {
         var exception = catchThrowable(() -> new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "1234567"));
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception.getMessage()).isEqualTo("ZipCode length must be 8");
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("ZipCode length must be 8");
     }
 }
