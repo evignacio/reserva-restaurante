@@ -1,4 +1,7 @@
 package br.com.fiap.reservarestaurante.core.infrastructure.repository;
 
-public interface RestaurantRepository {
+import br.com.fiap.reservarestaurante.core.infrastructure.repository.model.RestaurantModel;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface RestaurantRepository extends MongoRepository<RestaurantModel, String> {
 }
