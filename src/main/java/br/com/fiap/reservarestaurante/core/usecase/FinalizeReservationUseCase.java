@@ -11,12 +11,9 @@ public class FinalizeReservationUseCase {
     }
 
     public void execute(String idReservation, String idRestaurant) {
-        var restaurantOpt = restaurantGateway.findById(idRestaurant);
+        var restaurant = restaurantGateway.findById(idRestaurant)
+                .orElseThrow(() -> new IllegalStateException("Restaurant not found"));
 
-        if (restaurantOpt.isEmpty())
-            throw new IllegalStateException("Restaurant not found");
-
-        var restaurant = restaurantOpt.get();
         boolean reservationFound = restaurant.getReservations().removeIf(r -> r.getId().equals(idReservation));
 
         if (!reservationFound)
