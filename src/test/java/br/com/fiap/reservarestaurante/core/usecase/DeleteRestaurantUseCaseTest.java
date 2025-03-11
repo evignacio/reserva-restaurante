@@ -28,7 +28,7 @@ class DeleteRestaurantUseCaseTest {
     @Test
     void shouldDeleteRestaurant() {
         var id = UUID.randomUUID().toString();
-        var restaurant = new Restaurant();
+        var restaurant = new Restaurant(id);
 
         when(restaurantGateway.findById(id)).thenReturn(Optional.of(restaurant));
 
