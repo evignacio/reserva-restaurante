@@ -14,10 +14,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class RestaurantGatewayImpl implements RestaurantGateway {
 
     private final RestaurantRepository restaurantRepository;
+
+    public RestaurantGatewayImpl(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
+    }
 
     @Override
     public boolean nameIsAvailable(String name) {

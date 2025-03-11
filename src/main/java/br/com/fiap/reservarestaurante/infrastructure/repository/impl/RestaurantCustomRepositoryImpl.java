@@ -1,6 +1,5 @@
 package br.com.fiap.reservarestaurante.infrastructure.repository.impl;
 
-import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantCustomRepository;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressModel;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.RestaurantModel;
