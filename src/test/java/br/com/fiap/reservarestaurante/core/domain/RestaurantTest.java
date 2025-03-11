@@ -280,6 +280,64 @@ class RestaurantTest {
         assertThat(isOpen).isFalse();
     }
 
+    @Test
+    void shouldSetReservationsSuccessfully() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Set<WorkPeriod> workPeriods = getFullWeekWorkPeriod(9, 22);
+        Set<Reservation> reservations = new HashSet<>();
+        reservations.add(new Reservation("restaurantId", "userId1", 5, LocalDateTime.now().withHour(12)));
+        reservations.add(new Reservation("restaurantId", "userId2", 3, LocalDateTime.now().withHour(13)));
+        Set<Review> reviews = new HashSet<>();
+
+        Restaurant restaurant = new Restaurant("restaurantId", "Restaurant Name", address, 50, category, workPeriods, reservations, reviews);
+
+        assertThat(restaurant.getReservations()).isEqualTo(reservations);
+    }
+
+    @Test
+    void shouldReturnExceptionWhenSettingNullReservations() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Set<WorkPeriod> workPeriods = getFullWeekWorkPeriod(9, 22);
+        Set<Review> reviews = new HashSet<>();
+
+        var exception = catchThrowable(() -> new Restaurant("restaurantId", "Restaurant Name", address, 50, category, workPeriods, null, reviews));
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Reservations cannot be null");
+    }
+
+    @Test
+    void shouldSetReviewsSuccessfully() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Set<WorkPeriod> workPeriods = getFullWeekWorkPeriod(9, 22);
+        Set<Reservation> reservations = new HashSet<>();
+        Set<Review> reviews = new HashSet<>();
+        reviews.add(new Review("restaurantId", "userId1", 5, "Great place!"));
+        reviews.add(new Review("restaurantId", "userId2", 4, "Good food!"));
+
+        Restaurant restaurant = new Restaurant("restaurantId", "Restaurant Name", address, 50, category, workPeriods, reservations, reviews);
+
+        assertThat(restaurant.getReviews()).isEqualTo(reviews);
+    }
+
+    @Test
+    void shouldReturnExceptionWhenSettingNullReviews() {
+        Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
+        Category category = new Category("Italian");
+        Set<WorkPeriod> workPeriods = getFullWeekWorkPeriod(9, 22);
+        Set<Reservation> reservations = new HashSet<>();
+
+        var exception = catchThrowable(() -> new Restaurant("restaurantId", "Restaurant Name", address, 50, category, workPeriods, reservations, null));
+
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Reviews cannot be null");
+    }
+
     private Set<WorkPeriod> getFullWeekWorkPeriod(int startHour, int endHour) {
         var workPeriods = new HashSet<WorkPeriod>();
         workPeriods.add(new WorkPeriod(DayOfWeek.MONDAY, startHour, endHour));

@@ -17,6 +17,14 @@ public class Review extends Entity<String> {
         setContent(content);
     }
 
+    public Review(String id, String idUser, String idRestaurant, int rating, String content) {
+        super(id);
+        setIdRestaurant(idRestaurant);
+        setIdUser(idUser);
+        setRating(rating);
+        setContent(content);
+    }
+
     public String getIdUser() {
         return idUser;
     }

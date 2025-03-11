@@ -15,15 +15,12 @@ public class CreateReviewUseCase {
     }
 
     public void execute(Review review) {
-        if (userGateway.findById(review.getIdUser()).isEmpty())
+        if(userGateway.findById(review.getIdUser()).isEmpty())
             throw new IllegalStateException("User not found");
 
-        var restaurantOpt = restaurantGateway.findById(review.getIdRestaurant());
+        var restaurant = restaurantGateway.findById(review.getIdRestaurant())
+                .orElseThrow(() -> new IllegalStateException("Restaurant not found"));
 
-        if (restaurantOpt.isEmpty())
-            throw new IllegalStateException("Restaurant not found");
-
-        var restaurant = restaurantOpt.get();
         restaurant.addReview(review);
 
         restaurantGateway.save(restaurant);
