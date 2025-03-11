@@ -19,11 +19,8 @@ public class CreateRestaurantUseCase {
         if (!restaurantGateway.nameIsAvailable(restaurantDTO.name()))
             throw new IllegalStateException("Name restaurant not available");
 
-        var categoryOpt = categoryGateway.findById(restaurantDTO.categoryId());
-        if (categoryOpt.isEmpty())
-            throw new IllegalStateException("Category not found");
-
-        var category = categoryOpt.get();
+        var category = categoryGateway.findById(restaurantDTO.categoryId())
+                .orElseThrow(() -> new IllegalStateException("Category not found"));
 
         var restaurant = new Restaurant(
                 restaurantDTO.name(),

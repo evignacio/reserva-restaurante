@@ -17,6 +17,14 @@ public class Reservation extends Entity<String> {
         setDate(date);
     }
 
+    public Reservation(String id, String idRestaurant, String idUser, int amountOfTables, LocalDateTime date) {
+        super(id);
+        setIdRestaurant(idRestaurant);
+        setIdUser(idUser);
+        setAmountOfTables(amountOfTables);
+        setDate(date);
+    }
+
     public String getIdRestaurant() {
         return idRestaurant;
     }
@@ -60,4 +68,6 @@ public class Reservation extends Entity<String> {
 
         this.date = date;
     }
+
+
 }
