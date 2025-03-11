@@ -3,6 +3,7 @@ package br.com.fiap.reservarestaurante.infrastructure.gateway;
 import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
+import br.com.fiap.reservarestaurante.infrastructure.mapper.AddressMapper;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.RestaurantMapper;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 
     @Override
     public Set<Restaurant> find(String name, String categoryId, Address address) {
-        return this.restaurantRepository.findAll()
+        return this.restaurantRepository.findAll(name, categoryId, AddressMapper.toModel(address))
                 .stream()
                 .map(RestaurantMapper::toDomain)
                 .collect(Collectors.toSet());

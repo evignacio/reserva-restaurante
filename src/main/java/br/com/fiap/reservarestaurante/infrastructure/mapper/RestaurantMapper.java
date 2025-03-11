@@ -1,7 +1,6 @@
 package br.com.fiap.reservarestaurante.infrastructure.mapper;
 
 import br.com.fiap.reservarestaurante.core.domain.*;
-import br.com.fiap.reservarestaurante.core.infrastructure.repository.model.*;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.*;
 
 import java.util.Set;
@@ -11,14 +10,7 @@ public abstract class RestaurantMapper {
 
     public static Restaurant toDomain(RestaurantModel restaurantModel) {
         var addressModel = restaurantModel.getAddress();
-        var address = new Address(
-                addressModel.getStreet(),
-                addressModel.getState(),
-                addressModel.getCountry(),
-                addressModel.getStreet(),
-                addressModel.getNumber(),
-                addressModel.getZipCode()
-        );
+        var address = AddressMapper.toDomain(addressModel);
 
         Set<WorkPeriod> workPeriods = restaurantModel.getWorkPeriods()
                 .stream()
@@ -48,7 +40,7 @@ public abstract class RestaurantMapper {
     }
 
     public static RestaurantModel toModel(Restaurant restaurantDomain) {
-        var addressModel = AddressModel.builder().street(restaurantDomain.getAddress().getStreet()).number(restaurantDomain.getAddress().getNumber()).build();
+        var addressModel = AddressMapper.toModel(restaurantDomain.getAddress());
         var categoryModel = CategoryModel.builder().name(restaurantDomain.getCategory().getName()).build();
         Set<WorkPeriodModel> workPeriodsModel = restaurantDomain.getWorkPeriods()
                 .stream()

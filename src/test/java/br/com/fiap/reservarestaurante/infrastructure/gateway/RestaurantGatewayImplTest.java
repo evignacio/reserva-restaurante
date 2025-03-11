@@ -93,7 +93,7 @@ class RestaurantGatewayImplTest {
                 .workPeriods(workPeriods)
                 .build();
 
-        when(restaurantRepository.findAll()).thenReturn(List.of(restaurantModel));
+        when(restaurantRepository.findAll("Restaurant Name", "IdCategory", address)).thenReturn(Set.of(restaurantModel));
 
         Set<Restaurant> restaurants = restaurantGateway.find("Restaurant Name", "IdCategory", new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678"));
         assertThat(restaurants).isNotEmpty();
