@@ -1,7 +1,8 @@
-package br.com.fiap.reservarestaurante.core.infrastructure;
+package br.com.fiap.reservarestaurante.infrastructure.mapper;
 
 import br.com.fiap.reservarestaurante.core.domain.*;
 import br.com.fiap.reservarestaurante.core.infrastructure.repository.model.*;
+import br.com.fiap.reservarestaurante.infrastructure.repository.model.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;

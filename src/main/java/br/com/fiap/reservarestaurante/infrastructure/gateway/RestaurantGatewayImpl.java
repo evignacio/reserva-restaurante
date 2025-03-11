@@ -1,10 +1,10 @@
-package br.com.fiap.reservarestaurante.core.infrastructure.gateway;
+package br.com.fiap.reservarestaurante.infrastructure.gateway;
 
 import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
-import br.com.fiap.reservarestaurante.core.infrastructure.RestaurantMapper;
-import br.com.fiap.reservarestaurante.core.infrastructure.repository.RestaurantRepository;
+import br.com.fiap.reservarestaurante.infrastructure.mapper.RestaurantMapper;
+import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

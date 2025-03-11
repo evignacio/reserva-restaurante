@@ -1,4 +1,4 @@
-package br.com.fiap.reservarestaurante.core.infrastructure.repository.model;
+package br.com.fiap.reservarestaurante.infrastructure.repository.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
