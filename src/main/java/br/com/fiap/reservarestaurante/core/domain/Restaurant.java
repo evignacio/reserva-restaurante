@@ -15,7 +15,7 @@ public class Restaurant extends Entity<String> {
     private final Set<Review> reviews;
 
 
-    public Restaurant(String id) {
+    private Restaurant(String id) {
         super(id);
         this.workPeriods = new HashSet<>();
         this.reservations = new HashSet<>();
