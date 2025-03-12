@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public abstract class RestaurantMapper {
 
+    private RestaurantMapper() {
+    }
+
     public static Restaurant toDomain(RestaurantModel restaurantModel) {
         var addressModel = restaurantModel.getAddress();
         var address = AddressMapper.toDomain(addressModel);

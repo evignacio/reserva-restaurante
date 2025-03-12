@@ -45,4 +45,9 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
         return this.restaurantRepository.findById(id)
                 .map(RestaurantMapper::toDomain);
     }
+
+    @Override
+    public void delete(String id) {
+        restaurantRepository.deleteById(id);
+    }
 }

@@ -18,6 +18,14 @@ public class User extends Entity<String> {
         setEmail(email);
     }
 
+    public User(String id, String name, String surname, int age, String email) {
+        super(id);
+        setName(name);
+        setSurname(surname);
+        setAge(age);
+        setEmail(email);
+    }
+
     public void setEmail(String email) throws IllegalArgumentException {
         if (isValidEmail(email)) {
             this.email = email;
