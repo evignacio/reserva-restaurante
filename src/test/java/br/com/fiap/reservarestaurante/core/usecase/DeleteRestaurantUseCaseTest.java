@@ -21,6 +21,8 @@ class DeleteRestaurantUseCaseTest {
 
     @Mock
     private RestaurantGateway restaurantGateway;
+    @Mock
+    private Restaurant restaurant;
 
     @InjectMocks
     private DeleteRestaurantUseCase deleteRestaurantUseCase;
@@ -28,9 +30,9 @@ class DeleteRestaurantUseCaseTest {
     @Test
     void shouldDeleteRestaurant() {
         var id = UUID.randomUUID().toString();
-        var restaurant = new Restaurant(id);
 
         when(restaurantGateway.findById(id)).thenReturn(Optional.of(restaurant));
+        when(restaurant.getId()).thenReturn(id);
 
         assertDoesNotThrow(() -> deleteRestaurantUseCase.execute(id));
         verify(restaurantGateway, times(1)).delete(anyString());
