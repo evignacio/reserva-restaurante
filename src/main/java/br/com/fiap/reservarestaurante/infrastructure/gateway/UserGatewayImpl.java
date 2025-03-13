@@ -26,6 +26,11 @@ public class UserGatewayImpl implements UserGateway {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email).map(UserMapper::toDomain);
+    }
+
+    @Override
     public void delete(String id) {
         userRepository.deleteById(id);
     }
