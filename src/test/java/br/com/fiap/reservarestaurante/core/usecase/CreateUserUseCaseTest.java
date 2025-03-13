@@ -1,6 +1,6 @@
 package br.com.fiap.reservarestaurante.core.usecase;
 
-import br.com.fiap.reservarestaurante.core.domain.User;
+import br.com.fiap.reservarestaurante.core.dto.CreateUserDTO;
 import br.com.fiap.reservarestaurante.core.gateway.UserGateway;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class CreateUserUseCaseTest {
         var surname = "Pastor";
         var age = 49;
         var email = "evandro@email.com.br";
-        var evandroUser = new User(name, surname, age, email);
+        var evandroUser = new CreateUserDTO(name, surname, age, email);
 
         when(userGateway.isEmailAvailable(email)).thenReturn(true);
 
@@ -47,7 +47,7 @@ class CreateUserUseCaseTest {
         var surname = "Pastor";
         var age = 49;
         var email = "evandro@email.com.br";
-        var evandroUser = new User(name, surname, age, email);
+        var evandroUser = new CreateUserDTO(name, surname, age, email);
         when(userGateway.isEmailAvailable(email)).thenReturn(false);
         var exception = catchThrowable(() -> createUserUseCase.execute(evandroUser));
         assertThat(exception).isInstanceOf(IllegalStateException.class);

@@ -37,7 +37,7 @@ class CategoryGatewayImplTest {
     }
 
     @Test
-    void shouldReturnOptinalEmpty() {
+    void shouldReturnOptionalEmpty() {
         var categoryId = "categoryId";
 
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
