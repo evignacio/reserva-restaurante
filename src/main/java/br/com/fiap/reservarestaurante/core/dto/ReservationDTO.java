@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record ReservationDTO(
         String idRestaurant,
         String idUser,
-        int numberOfClients,
+        int amountOfTables,
         LocalDateTime date
 ) {
 }
