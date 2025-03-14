@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("users")
+@RestController("usersController")
+@RequestMapping(value = "/users")
 public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
@@ -23,19 +24,19 @@ public class UserController {
     }
 
     @GetMapping()
-    ResponseEntity<UserDTO> findUserByEmail(String email) {
+    ResponseEntity<UserDTO> findUserByEmail(@RequestParam("e") String email) {
         var response = findUserUseCase.execute(email);
         return ResponseEntity.ok(response);
     }
 
 
     @PostMapping()
-    ResponseEntity<Void> createUser(CreateUserDTO user) {
+    ResponseEntity<Void> createUser(@RequestBody CreateUserDTO user) {
         createUserUseCase.execute(user);
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}")
     ResponseEntity<Void> deleteUser(@PathVariable String id) {
         deleteUserUseCase.execute(id);
         return ResponseEntity.ok().build();
