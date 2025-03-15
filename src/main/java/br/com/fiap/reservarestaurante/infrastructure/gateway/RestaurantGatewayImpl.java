@@ -6,6 +6,7 @@ import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.AddressMapper;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.RestaurantMapper;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
+import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +35,11 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 
     @Override
     public Set<Restaurant> find(String name, String categoryId, Address address) {
-        return this.restaurantRepository.findAll(name, categoryId, AddressMapper.toModel(address))
+        AddressModel addressModel = null;
+        if (address != null)
+            addressModel = AddressMapper.toModel(address);
+
+        return this.restaurantRepository.findAll(name, categoryId, addressModel)
                 .stream()
                 .map(RestaurantMapper::toDomain)
                 .collect(Collectors.toSet());
