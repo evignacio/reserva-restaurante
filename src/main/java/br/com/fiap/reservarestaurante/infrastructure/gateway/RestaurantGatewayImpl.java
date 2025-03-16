@@ -25,7 +25,7 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 
     @Override
     public boolean nameIsAvailable(String name) {
-        return this.restaurantRepository.existsByName(name);
+        return !this.restaurantRepository.existsByName(name);
     }
 
     @Override

@@ -4,3 +4,7 @@ spring:
       uri: mongodb://localhost:27017/reserva-restaurante
   application:
     name: reserva-restaurante
+logging:
+  level:
+    org.springframework.data.mongodb.core: DEBUG
+

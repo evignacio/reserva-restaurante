@@ -9,8 +9,8 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document
 @SuperBuilder
+@Document("user")
 @EqualsAndHashCode(callSuper = true)
 public class UserModel extends Model<String> {
     @NotBlank

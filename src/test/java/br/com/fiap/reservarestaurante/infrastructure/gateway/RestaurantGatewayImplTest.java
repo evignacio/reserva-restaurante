@@ -37,7 +37,7 @@ class RestaurantGatewayImplTest {
         when(restaurantRepository.existsByName("restaurant")).thenReturn(true);
 
         boolean result = restaurantGateway.nameIsAvailable("restaurant");
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @Test
@@ -45,7 +45,7 @@ class RestaurantGatewayImplTest {
         when(restaurantRepository.existsByName("restaurant")).thenReturn(false);
 
         boolean result = restaurantGateway.nameIsAvailable("restaurant");
-        assertThat(result).isFalse();
+        assertThat(result).isTrue();
     }
 
     @Test

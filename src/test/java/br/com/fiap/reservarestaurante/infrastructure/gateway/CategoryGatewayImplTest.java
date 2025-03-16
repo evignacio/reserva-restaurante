@@ -24,24 +24,24 @@ class CategoryGatewayImplTest {
 
     @Test
     void shouldReturnCategory() {
-        var categoryId = "categoryId";
+        var categoryName = "Italian";
         var categoryModel = CategoryModel.builder()
-                .id(categoryId)
+                .id("categoryId")
                 .name("categoryName")
                 .build();
 
-        when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(categoryModel));
-        var category = categoryGateway.findById(categoryId);
+        when(categoryRepository.findByName(categoryName)).thenReturn(Optional.of(categoryModel));
+        var category = categoryGateway.findByName(categoryName);
 
         assertThat(category).isPresent();
     }
 
     @Test
     void shouldReturnOptionalEmpty() {
-        var categoryId = "categoryId";
+        var categoryName = "Italian";
 
-        when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
-        var category = categoryGateway.findById(categoryId);
+        when(categoryRepository.findByName(categoryName)).thenReturn(Optional.empty());
+        var category = categoryGateway.findByName(categoryName);
 
         assertThat(category).isEmpty();
     }
