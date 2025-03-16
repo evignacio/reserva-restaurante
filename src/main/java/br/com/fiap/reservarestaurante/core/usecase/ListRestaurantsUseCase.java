@@ -17,6 +17,12 @@ public class ListRestaurantsUseCase {
     }
 
     public Set<RestaurantDTO> execute(String name, String categoryName, Address address, LocalDateTime date) {
+        if (date == null)
+            date = LocalDateTime.now();
+        else if (date.isBefore(LocalDateTime.now()))
+            throw new IllegalStateException("Date cannot be in the past");
+
+        LocalDateTime finalDate = date;
         return restaurantGateway.find(name, categoryName, address)
                 .stream()
                 .map(restaurant -> new RestaurantDTO(
@@ -24,8 +30,8 @@ public class ListRestaurantsUseCase {
                         restaurant.getName(),
                         restaurant.getCategory().getName(),
                         restaurant.getAddress(),
-                        restaurant.getAmountOfReservationsAvailableForDay(date),
-                        restaurant.getReviews(), restaurant.isOpen(date)))
+                        restaurant.getAmountOfReservationsAvailableForDay(finalDate),
+                        restaurant.getReviews(), restaurant.isOpen(finalDate)))
                 .collect(Collectors.toSet());
     }
 }

@@ -7,7 +7,6 @@ import br.com.fiap.reservarestaurante.infrastructure.mapper.AddressMapper;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.RestaurantMapper;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressModel;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

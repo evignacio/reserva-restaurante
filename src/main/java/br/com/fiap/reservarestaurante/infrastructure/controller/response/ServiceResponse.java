@@ -16,7 +16,15 @@ public class ServiceResponse<T> {
     }
 
     public static <T> ServiceResponse<T> build(T data) {
-        return new ServiceResponse<>(data, new Message(1, "Operacao realizada com sucesso"));
+        return new ServiceResponse<>(data, buildSucessMessage());
+    }
+
+    public static <T> ServiceResponse<T> build() {
+        return new ServiceResponse<>(null, buildSucessMessage());
+    }
+
+    private static Message buildSucessMessage() {
+        return new Message(1, "Operacao realizada com sucesso");
     }
 
     @Data
