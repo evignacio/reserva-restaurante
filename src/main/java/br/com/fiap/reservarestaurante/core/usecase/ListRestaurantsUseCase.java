@@ -16,8 +16,8 @@ public class ListRestaurantsUseCase {
         this.restaurantGateway = restaurantGateway;
     }
 
-    public Set<RestaurantDTO> execute(String name, String categoryId, Address address, LocalDateTime date) {
-        return restaurantGateway.find(name, categoryId, address)
+    public Set<RestaurantDTO> execute(String name, String categoryName, Address address, LocalDateTime date) {
+        return restaurantGateway.find(name, categoryName, address)
                 .stream()
                 .map(restaurant -> new RestaurantDTO(
                         restaurant.getId(),

@@ -26,8 +26,8 @@ public class RestaurantController {
 
     //TODO: ajustar a consulta por data
     @GetMapping
-    public ResponseEntity<ServiceResponse<Set<RestaurantDTO>>> listRestaurants(@RequestParam(required = false) String name, @RequestParam(required = false) String categoryId, @RequestParam(required = false) LocalDateTime date) {
-        var restaurants = listRestaurantsUseCase.execute(name, categoryId, null, date);
+    public ResponseEntity<ServiceResponse<Set<RestaurantDTO>>> listRestaurants(@RequestParam(required = false) String name, @RequestParam(required = false) String categoryName, @RequestParam(required = false) LocalDateTime date) {
+        var restaurants = listRestaurantsUseCase.execute(name, categoryName, null, date);
         return ResponseEntity.ok(ServiceResponse.build(restaurants));
     }
 

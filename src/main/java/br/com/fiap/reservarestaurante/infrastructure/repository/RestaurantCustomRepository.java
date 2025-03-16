@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Repository
 public interface RestaurantCustomRepository {
-    Set<RestaurantModel> findAll(String name, String categoryId, AddressModel address);
+    Set<RestaurantModel> findAll(String name, String categoryName, AddressModel address);
 }

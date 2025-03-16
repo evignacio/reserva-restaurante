@@ -34,12 +34,12 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
     }
 
     @Override
-    public Set<Restaurant> find(String name, String categoryId, Address address) {
+    public Set<Restaurant> find(String name, String categoryName, Address address) {
         AddressModel addressModel = null;
         if (address != null)
             addressModel = AddressMapper.toModel(address);
 
-        return this.restaurantRepository.findAll(name, categoryId, addressModel)
+        return this.restaurantRepository.findAll(name, categoryName, addressModel)
                 .stream()
                 .map(RestaurantMapper::toDomain)
                 .collect(Collectors.toSet());

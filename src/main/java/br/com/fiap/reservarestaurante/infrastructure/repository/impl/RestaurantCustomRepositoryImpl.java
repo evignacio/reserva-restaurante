@@ -20,14 +20,14 @@ public class RestaurantCustomRepositoryImpl implements RestaurantCustomRepositor
     }
 
     @Override
-    public Set<RestaurantModel> findAll(String name, String categoryId, AddressModel address) {
+    public Set<RestaurantModel> findAll(String name, String categoryName, AddressModel address) {
         var query = new Query();
 
         if (name != null)
             query.addCriteria(Criteria.where("name").is(name));
 
-        if (categoryId != null)
-            query.addCriteria(Criteria.where("category.id").is(categoryId));
+        if (categoryName != null)
+            query.addCriteria(Criteria.where("category.name").is(categoryName));
 
         if (address != null)
             query.addCriteria(Criteria.where("address.city").is(address.getCity())
