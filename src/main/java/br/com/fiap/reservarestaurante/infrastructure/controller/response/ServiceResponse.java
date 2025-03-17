@@ -23,6 +23,10 @@ public class ServiceResponse<T> {
         return new ServiceResponse<>(null, buildSucessMessage());
     }
 
+    public static <T> ServiceResponse<T> build(Message message) {
+        return new ServiceResponse<>(null, message);
+    }
+
     private static Message buildSucessMessage() {
         return new Message(1, "Operacao realizada com sucesso");
     }
