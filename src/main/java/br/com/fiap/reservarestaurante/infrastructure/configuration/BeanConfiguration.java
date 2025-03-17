@@ -50,4 +50,9 @@ public class BeanConfiguration {
     public ListRestaurantsUseCase listRestaurantsUseCase(RestaurantGateway restaurantGateway) {
         return new ListRestaurantsUseCase(restaurantGateway);
     }
+
+    @Bean
+    public FindUserReservationsUseCase findUserReservationsUseCase(RestaurantGateway restaurantGateway) {
+        return new FindUserReservationsUseCase(restaurantGateway);
+    }
 }

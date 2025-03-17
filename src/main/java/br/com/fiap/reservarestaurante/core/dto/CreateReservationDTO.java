@@ -2,12 +2,10 @@ package br.com.fiap.reservarestaurante.core.dto;
 
 import java.time.LocalDateTime;
 
-public record ReservationDTO(
+public record CreateReservationDTO(
 
-        String reservationId,
-        String restaurantId,
-        String restaurantName,
-        String userId,
+        String idRestaurant,
+        String idUser,
         int amountOfTables,
         LocalDateTime date
 ) {

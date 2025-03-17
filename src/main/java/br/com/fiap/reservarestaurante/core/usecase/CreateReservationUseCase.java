@@ -26,6 +26,6 @@ public class CreateReservationUseCase {
         restaurant.addReservation(reservation);
         restaurantGateway.save(restaurant);
 
-        return new ReservationDTO(createReservationDTO.idRestaurant(), createReservationDTO.idUser(), createReservationDTO.amountOfTables(), createReservationDTO.date());
+        return new ReservationDTO(reservation.getId(), createReservationDTO.idRestaurant(), restaurant.getName(), createReservationDTO.idUser(), createReservationDTO.amountOfTables(), createReservationDTO.date());
     }
 }

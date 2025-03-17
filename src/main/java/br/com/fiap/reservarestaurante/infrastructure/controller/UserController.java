@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping()
-    ResponseEntity<UserDTO> findUserByEmail(@RequestParam("e") String email) {
+    ResponseEntity<UserDTO> findUserByEmail(@RequestParam String email) {
         var response = findUserUseCase.execute(email);
         return ResponseEntity.ok(response);
     }

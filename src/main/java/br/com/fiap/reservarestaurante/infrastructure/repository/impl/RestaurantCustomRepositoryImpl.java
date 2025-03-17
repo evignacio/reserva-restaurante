@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Component
 public class RestaurantCustomRepositoryImpl implements RestaurantCustomRepository {
@@ -33,6 +35,19 @@ public class RestaurantCustomRepositoryImpl implements RestaurantCustomRepositor
             query.addCriteria(Criteria.where("address.city").is(address.getCity())
                     .and("address.state").is(address.getState())
                     .and("address.country").is(address.getCountry()));
+
+        var restaurants = mongoTemplate.find(query, RestaurantModel.class);
+        return Set.copyOf(restaurants);
+    }
+
+    @Override
+    public Set<RestaurantModel> findWithUserFutureReservations(UUID userId) {
+        var query = new Query();
+
+        var today = LocalDateTime.now();
+
+        if (userId != null)
+            query.addCriteria(Criteria.where("reservations").elemMatch(Criteria.where("idUser").is(userId).and("date").gte(today)));
 
         var restaurants = mongoTemplate.find(query, RestaurantModel.class);
         return Set.copyOf(restaurants);

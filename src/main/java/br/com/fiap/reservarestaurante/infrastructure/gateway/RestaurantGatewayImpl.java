@@ -6,11 +6,11 @@ import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.AddressMapper;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.RestaurantMapper;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -44,6 +44,14 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
     public Optional<Restaurant> findById(String id) {
         return this.restaurantRepository.findById(id)
                 .map(RestaurantMapper::toDomain);
+    }
+
+    @Override
+    public Set<Restaurant> findUserFutureReservations(UUID userId) {
+        return restaurantRepository.findWithUserFutureReservations(userId)
+                .stream()
+                .map(RestaurantMapper::toDomain)
+                .collect(Collectors.toSet());
     }
 
     @Override
