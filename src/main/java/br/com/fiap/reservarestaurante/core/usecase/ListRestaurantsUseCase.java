@@ -1,6 +1,7 @@
 package br.com.fiap.reservarestaurante.core.usecase;
 
 import br.com.fiap.reservarestaurante.core.domain.Address;
+import br.com.fiap.reservarestaurante.core.dto.AddressDTO;
 import br.com.fiap.reservarestaurante.core.dto.RestaurantDTO;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 
@@ -16,7 +17,7 @@ public class ListRestaurantsUseCase {
         this.restaurantGateway = restaurantGateway;
     }
 
-    public Set<RestaurantDTO> execute(String name, String categoryName, Address address, LocalDateTime date) {
+    public Set<RestaurantDTO> execute(String name, String categoryName, AddressDTO address, LocalDateTime date) {
         if (date == null)
             date = LocalDateTime.now();
         else if (date.isBefore(LocalDateTime.now()))
