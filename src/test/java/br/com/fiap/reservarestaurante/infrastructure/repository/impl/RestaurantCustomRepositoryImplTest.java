@@ -4,7 +4,6 @@ import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressMod
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.RestaurantModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -47,7 +46,7 @@ class RestaurantCustomRepositoryImplTest {
 
         when(mongoTemplate.find(any(Query.class), any())).thenReturn(List.of(restaurantModel));
 
-        Set<RestaurantModel> restaurants = restaurantCustomRepository.findAll("Restaurant Name", "IdCategory", address);
+        Set<RestaurantModel> restaurants = restaurantCustomRepository.findAll("Restaurant Name", "Italian", address);
         assertThat(restaurants).isNotEmpty();
         assertThat(restaurants).hasSize(1);
     }
@@ -65,7 +64,7 @@ class RestaurantCustomRepositoryImplTest {
 
         when(mongoTemplate.find(any(Query.class), any())).thenReturn(List.of());
 
-        Set<RestaurantModel> restaurants = restaurantCustomRepository.findAll("Restaurant Name", "IdCategory", address);
+        Set<RestaurantModel> restaurants = restaurantCustomRepository.findAll("Restaurant Name", "Italian", address);
         assertThat(restaurants).isEmpty();
     }
 
@@ -82,14 +81,14 @@ class RestaurantCustomRepositoryImplTest {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is("Restaurant Name"));
-        query.addCriteria(Criteria.where("category.id").is("IdCategory"));
+        query.addCriteria(Criteria.where("category.name").is("Italian"));
         query.addCriteria(Criteria.where("address.city").is(address.getCity())
                 .and("address.state").is(address.getState())
                 .and("address.country").is(address.getCountry()));
 
         when(mongoTemplate.find(query, RestaurantModel.class)).thenReturn(List.of());
 
-        Set<RestaurantModel> restaurants = restaurantCustomRepository.findAll("Restaurant Name", "IdCategory", address);
+        Set<RestaurantModel> restaurants = restaurantCustomRepository.findAll("Restaurant Name", "Italian", address);
         assertThat(restaurants).isEmpty();
     }
 }

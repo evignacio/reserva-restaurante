@@ -39,10 +39,10 @@ class CreateRestaurantUseCaseTest {
         Category category = new Category("Italian");
         WorkPeriod workPeriod = new WorkPeriod(DayOfWeek.MONDAY, 9, 22);
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
-        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getId(), address, 50, workPeriods);
+        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getName(), address, 50, workPeriods);
 
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(true);
-        when(categoryGateway.findById(category.getId())).thenReturn(Optional.of(category));
+        when(categoryGateway.findByName(category.getName())).thenReturn(Optional.of(category));
 
         var result = assertDoesNotThrow(() -> createRestaurantUseCase.execute(restaurantDTO));
         assertThat(result).isNotNull();
@@ -59,7 +59,7 @@ class CreateRestaurantUseCaseTest {
         Category category = new Category("Italian");
         WorkPeriod workPeriod = new WorkPeriod(DayOfWeek.MONDAY, 9, 22);
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
-        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getId(), address, 50, workPeriods);
+        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getName(), address, 50, workPeriods);
 
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(false);
 
@@ -76,10 +76,10 @@ class CreateRestaurantUseCaseTest {
         Category category = new Category("Italian");
         WorkPeriod workPeriod = new WorkPeriod(DayOfWeek.MONDAY, 9, 22);
         Set<WorkPeriod> workPeriods = Set.of(workPeriod);
-        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getId(), address, 50, workPeriods);
+        CreateRestaurantDTO restaurantDTO = new CreateRestaurantDTO("Restaurant Name", category.getName(), address, 50, workPeriods);
 
         when(restaurantGateway.nameIsAvailable("Restaurant Name")).thenReturn(true);
-        when(categoryGateway.findById(category.getId())).thenReturn(Optional.empty());
+        when(categoryGateway.findByName(category.getName())).thenReturn(Optional.empty());
 
         var exception = catchThrowable(() -> createRestaurantUseCase.execute(restaurantDTO));
 

@@ -5,5 +5,5 @@ import br.com.fiap.reservarestaurante.core.domain.WorkPeriod;
 
 import java.util.Set;
 
-public record CreateRestaurantDTO(String name, String categoryId, Address address, int maxCapacity, Set<WorkPeriod> workPeriods) {
+public record CreateRestaurantDTO(String name, String categoryName, Address address, int maxCapacity, Set<WorkPeriod> workPeriods) {
 }

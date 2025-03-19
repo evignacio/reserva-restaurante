@@ -17,8 +17,8 @@ public class CategoryGatewayImpl implements CategoryGateway {
     }
 
     @Override
-    public Optional<Category> findById(String id) {
-        return this.categoryRepository.findById(id)
+    public Optional<Category> findByName(String name) {
+        return this.categoryRepository.findByName(name)
                 .map(category -> new Category(category.getId(), category.getName()));
     }
 }
