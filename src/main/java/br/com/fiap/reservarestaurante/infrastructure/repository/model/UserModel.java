@@ -5,14 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document
 @SuperBuilder
-@NoArgsConstructor
+@Document("user")
 @EqualsAndHashCode(callSuper = true)
 public class UserModel extends Model<String> {
     @NotBlank

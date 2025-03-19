@@ -5,11 +5,8 @@ import br.com.fiap.reservarestaurante.infrastructure.repository.model.Restaurant
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Repository
 public interface RestaurantCustomRepository {
-    Set<RestaurantModel> findAll(String name, String categoryId, AddressModel address);
-
-    Set<RestaurantModel> findWithUserFutureReservations(UUID userId);
+    Set<RestaurantModel> findAll(String name, String categoryName, AddressModel address);
 }

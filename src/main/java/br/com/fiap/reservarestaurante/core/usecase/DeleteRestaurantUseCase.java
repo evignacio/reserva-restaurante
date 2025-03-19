@@ -13,9 +13,8 @@ public class DeleteRestaurantUseCase {
 
     public void execute(String id) {
         Restaurant restaurant;
-
-        restaurant = restaurantGateway.findById(id).orElseThrow(() -> new IllegalStateException("Restaurant not found"));
-
+        restaurant = restaurantGateway.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Restaurant not found"));
         restaurantGateway.delete(restaurant.getId());
     }
 }

@@ -2,15 +2,16 @@ package br.com.fiap.reservarestaurante.infrastructure.gateway;
 
 import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
+import br.com.fiap.reservarestaurante.core.dto.AddressDTO;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.AddressMapper;
 import br.com.fiap.reservarestaurante.infrastructure.mapper.RestaurantMapper;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
+import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressModel;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,7 +25,7 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 
     @Override
     public boolean nameIsAvailable(String name) {
-        return this.restaurantRepository.existsByName(name);
+        return !this.restaurantRepository.existsByName(name);
     }
 
     @Override
@@ -33,8 +34,12 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
     }
 
     @Override
-    public Set<Restaurant> find(String name, String categoryId, Address address) {
-        return this.restaurantRepository.findAll(name, categoryId, AddressMapper.toModel(address))
+    public Set<Restaurant> find(String name, String categoryName, AddressDTO address) {
+        AddressModel addressModel = null;
+        if (address != null)
+            addressModel = AddressMapper.toModel(address);
+
+        return this.restaurantRepository.findAll(name, categoryName, addressModel)
                 .stream()
                 .map(RestaurantMapper::toDomain)
                 .collect(Collectors.toSet());
@@ -44,14 +49,6 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
     public Optional<Restaurant> findById(String id) {
         return this.restaurantRepository.findById(id)
                 .map(RestaurantMapper::toDomain);
-    }
-
-    @Override
-    public Set<Restaurant> findUserFutureReservations(UUID userId) {
-        return restaurantRepository.findWithUserFutureReservations(userId)
-                .stream()
-                .map(RestaurantMapper::toDomain)
-                .collect(Collectors.toSet());
     }
 
     @Override

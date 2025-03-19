@@ -1,38 +1,26 @@
 package br.com.fiap.reservarestaurante.infrastructure.controller;
 
-import br.com.fiap.reservarestaurante.core.dto.CreateReservationDTO;
-import br.com.fiap.reservarestaurante.core.dto.ReservationDTO;
-import br.com.fiap.reservarestaurante.core.usecase.CreateReservationUseCase;
-import br.com.fiap.reservarestaurante.core.usecase.FindUserReservationsUseCase;
+import br.com.fiap.reservarestaurante.core.usecase.FinalizeReservationUseCase;
+import br.com.fiap.reservarestaurante.infrastructure.controller.response.ServiceResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.util.Set;
-import java.util.UUID;
-
-@RestController("reservationController")
-@RequestMapping(value = "/reservations")
+@RestController
+@RequestMapping(value = "/restaurant")
 public class ReservationController {
 
-    private final CreateReservationUseCase createReservationUseCase;
-    private final FindUserReservationsUseCase findUserReservationsUseCase;
+    private final FinalizeReservationUseCase finalizeReservationUseCase;
 
-    public ReservationController(CreateReservationUseCase createReservationUseCase, FindUserReservationsUseCase findUserReservationsUseCase) {
-        this.createReservationUseCase = createReservationUseCase;
-        this.findUserReservationsUseCase = findUserReservationsUseCase;
+    public ReservationController(FinalizeReservationUseCase finalizeReservationUseCase) {
+        this.finalizeReservationUseCase = finalizeReservationUseCase;
     }
 
-    @PostMapping()
-    ResponseEntity<ReservationDTO> reserve(CreateReservationDTO createReservationDTO) {
-        var reservation = createReservationUseCase.execute(createReservationDTO);
-        var uri = URI.create("/reservations/" + reservation.reservationId());
-        return ResponseEntity.created(uri).body(reservation);
-    }
-
-    @GetMapping("/reservations/users/{userId}")
-    ResponseEntity<Set<ReservationDTO>> findUserReservations(@PathVariable UUID userId) {
-        var reservations = findUserReservationsUseCase.execute(userId);
-        return ResponseEntity.ok(reservations);
+    @PatchMapping("{idRestaurant}/reservation/{idReservation}")
+    public ResponseEntity<ServiceResponse<Void>> finalizeReservation(@PathVariable String idReservation, @PathVariable String idRestaurant) {
+        finalizeReservationUseCase.execute(idReservation, idRestaurant);
+        return ResponseEntity.ok(ServiceResponse.build());
     }
 }

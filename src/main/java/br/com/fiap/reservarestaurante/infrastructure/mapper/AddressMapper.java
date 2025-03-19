@@ -1,6 +1,7 @@
 package br.com.fiap.reservarestaurante.infrastructure.mapper;
 
 import br.com.fiap.reservarestaurante.core.domain.Address;
+import br.com.fiap.reservarestaurante.core.dto.AddressDTO;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressModel;
 
 public abstract class AddressMapper {
@@ -16,6 +17,14 @@ public abstract class AddressMapper {
                 .street(address.getStreet())
                 .number(address.getNumber())
                 .zipCode(address.getZipCode())
+                .build();
+    }
+
+    public static AddressModel toModel(AddressDTO address) {
+        return AddressModel.builder()
+                .city(address.city())
+                .state(address.state())
+                .country(address.country())
                 .build();
     }
 

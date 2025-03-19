@@ -4,6 +4,7 @@ import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Category;
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
 import br.com.fiap.reservarestaurante.core.domain.WorkPeriod;
+import br.com.fiap.reservarestaurante.core.dto.AddressDTO;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressModel;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.CategoryModel;
@@ -37,7 +38,7 @@ class RestaurantGatewayImplTest {
         when(restaurantRepository.existsByName("restaurant")).thenReturn(true);
 
         boolean result = restaurantGateway.nameIsAvailable("restaurant");
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @Test
@@ -45,7 +46,7 @@ class RestaurantGatewayImplTest {
         when(restaurantRepository.existsByName("restaurant")).thenReturn(false);
 
         boolean result = restaurantGateway.nameIsAvailable("restaurant");
-        assertThat(result).isFalse();
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -74,6 +75,8 @@ class RestaurantGatewayImplTest {
                 .zipCode("12345678")
                 .build();
 
+        AddressDTO addressDTO = new AddressDTO(address.getCountry(), address.getCity(), address.getState());
+
         CategoryModel category = new CategoryModel("IdCategory","Italian");
 
         WorkPeriodModel workPeriod = WorkPeriodModel.builder()
@@ -92,9 +95,9 @@ class RestaurantGatewayImplTest {
                 .workPeriods(workPeriods)
                 .build();
 
-        when(restaurantRepository.findAll("Restaurant Name", "IdCategory", address)).thenReturn(Set.of(restaurantModel));
+        when(restaurantRepository.findAll(eq("Restaurant Name"), eq("IdCategory"), any(AddressModel.class))).thenReturn(Set.of(restaurantModel));
 
-        Set<Restaurant> restaurants = restaurantGateway.find("Restaurant Name", "IdCategory", new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678"));
+        Set<Restaurant> restaurants = restaurantGateway.find("Restaurant Name", "IdCategory", addressDTO);
         assertThat(restaurants).isNotEmpty();
         assertThat(restaurants).hasSize(1);
     }

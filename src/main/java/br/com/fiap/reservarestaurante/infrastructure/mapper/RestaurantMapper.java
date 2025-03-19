@@ -76,6 +76,7 @@ public abstract class RestaurantMapper {
                 ).collect(Collectors.toSet());
 
         return RestaurantModel.builder()
+                .id(restaurantDomain.getId())
                 .name(restaurantDomain.getName())
                 .address(addressModel)
                 .maxCapacity(restaurantDomain.getMaxCapacity())
