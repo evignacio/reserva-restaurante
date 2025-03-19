@@ -1,6 +1,7 @@
 spring:
   data:
     mongodb:
+      initialization-mode: always
       uri: mongodb://localhost:27017/reserva-restaurante
   application:
     name: reserva-restaurante
