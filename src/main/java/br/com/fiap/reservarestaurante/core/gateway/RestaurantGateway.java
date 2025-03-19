@@ -1,12 +1,10 @@
 package br.com.fiap.reservarestaurante.core.gateway;
 
-import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
 import br.com.fiap.reservarestaurante.core.dto.AddressDTO;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 public interface RestaurantGateway {
     boolean nameIsAvailable(String name);
@@ -17,7 +15,7 @@ public interface RestaurantGateway {
 
     Optional<Restaurant> findById(String id);
 
-    Set<Restaurant> findUserFutureReservations(UUID userId);
+    Set<Restaurant> findUserReservations(String userId);
 
     void delete(String id);
 }

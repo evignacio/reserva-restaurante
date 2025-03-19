@@ -1,6 +1,5 @@
 package br.com.fiap.reservarestaurante.infrastructure.gateway;
 
-import br.com.fiap.reservarestaurante.core.domain.Address;
 import br.com.fiap.reservarestaurante.core.domain.Restaurant;
 import br.com.fiap.reservarestaurante.core.dto.AddressDTO;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
@@ -54,5 +53,13 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
     @Override
     public void delete(String id) {
         restaurantRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Restaurant> findUserReservations(String userId) {
+        return restaurantRepository.findWithUserReservations(userId)
+                .stream()
+                .map(RestaurantMapper::toDomain)
+                .collect(Collectors.toSet());
     }
 }

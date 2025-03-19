@@ -9,4 +9,6 @@ import java.util.Set;
 @Repository
 public interface RestaurantCustomRepository {
     Set<RestaurantModel> findAll(String name, String categoryName, AddressModel address);
+    Set<RestaurantModel> findWithUserReservations(String userId);
+
 }

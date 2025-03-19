@@ -56,8 +56,8 @@ class CreateReservationUseCaseTest {
         verify(restaurantGateway, times(1)).save(any(Restaurant.class));
         assertThat(result).isNotNull();
         assertThat(result.date()).isEqualTo(dataReserva);
-        assertThat(result.idRestaurant()).isEqualTo(reservationReq.idRestaurant());
-        assertThat(result.idUser()).isEqualTo(reservationReq.idUser());
+        assertThat(result.restaurantId()).isEqualTo(reservationReq.idRestaurant());
+        assertThat(result.userId()).isEqualTo(reservationReq.idUser());
         assertThat(result.amountOfTables()).isEqualTo(amountOfTables);
 
     }

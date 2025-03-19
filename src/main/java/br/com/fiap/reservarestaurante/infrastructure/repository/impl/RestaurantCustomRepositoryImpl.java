@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 @Component
 public class RestaurantCustomRepositoryImpl implements RestaurantCustomRepository {
@@ -41,7 +40,7 @@ public class RestaurantCustomRepositoryImpl implements RestaurantCustomRepositor
     }
 
     @Override
-    public Set<RestaurantModel> findWithUserFutureReservations(UUID userId) {
+    public Set<RestaurantModel> findWithUserReservations(String userId) {
         var query = new Query();
 
         var today = LocalDateTime.now();

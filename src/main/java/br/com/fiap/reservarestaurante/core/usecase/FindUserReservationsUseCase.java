@@ -5,7 +5,6 @@ import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class FindUserReservationsUseCase {
 
@@ -15,11 +14,11 @@ public class FindUserReservationsUseCase {
         this.restaurantGateway = restaurantGateway;
     }
 
-    public Set<ReservationDTO> execute(UUID userId) {
+    public Set<ReservationDTO> execute(String userId) {
 
         Set<ReservationDTO> reservationDTOS = new HashSet<>();
 
-        var restaurants = restaurantGateway.findUserFutureReservations(userId);
+        var restaurants = restaurantGateway.findUserReservations(userId);
         restaurants.forEach(restaurant ->
                 restaurant.getReservations()
                         .forEach(reservation ->
