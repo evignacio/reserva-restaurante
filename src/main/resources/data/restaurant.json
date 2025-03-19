@@ -1,0 +1,38 @@
+{
+  "name": "string",
+  "address": {
+    "city": "Santos",
+    "state": "SP",
+    "country": "BR",
+    "street": "rua 2",
+    "number": 21,
+    "zipCode": "11060471"
+  },
+  "maxCapacity": 20,
+  "category": {
+    "name": "cat1"
+  },
+  "workPeriods": [
+    {
+      "dayOfWeek": "MONDAY",
+      "startHour": 9,
+      "endHour": 17
+    }
+  ],
+  "reservations": [
+    {
+      "idRestaurant": "restaurant123",
+      "idUser": "b9c17e7a-86f4-4ac3-a547-bd306f589a1d",
+      "amountOfTables": 2,
+      "date": "2025-03-19T19:00:00"
+    }
+  ],
+  "reviews": [
+    {
+      "idUser": "user789",
+      "idRestaurant": "restaurant456",
+      "rating": 5,
+      "content": "Amazing food and excellent service!"
+    }
+  ]
+}

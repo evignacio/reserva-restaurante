@@ -38,12 +38,12 @@ class UserControllerTest {
 
     @Test
     void shouldFindUser() throws Exception {
-        var id = UUID.randomUUID();
+        var id = UUID.randomUUID().toString();
         var user = new UserDTO(id, "a", "a@fiap.com.br");
         var objMapper = new ObjectMapper();
         var response = objMapper.writeValueAsString(user);
         when(findUserUseCase.execute("a@fiap.com.br")).thenReturn(user);
-        this.mockMvc.perform(get("/users?e=a@fiap.com.br")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/users?email=a@fiap.com.br")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString(response)));
     }
 

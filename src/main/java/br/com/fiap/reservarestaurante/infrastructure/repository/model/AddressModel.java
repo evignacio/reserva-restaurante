@@ -2,11 +2,13 @@ package br.com.fiap.reservarestaurante.infrastructure.repository.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class AddressModel {
     @NotNull
     @NotBlank
@@ -24,4 +26,8 @@ public class AddressModel {
     @NotNull
     @NotBlank
     private String zipCode;
+
+    public AddressModel() {
+        //default
+    }
 }

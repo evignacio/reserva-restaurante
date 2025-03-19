@@ -1,7 +1,7 @@
 package br.com.fiap.reservarestaurante.core.usecase;
 
 import br.com.fiap.reservarestaurante.core.domain.*;
-import br.com.fiap.reservarestaurante.core.dto.ReservationDTO;
+import br.com.fiap.reservarestaurante.core.dto.CreateReservationDTO;
 import br.com.fiap.reservarestaurante.core.gateway.RestaurantGateway;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +48,7 @@ class CreateReservationUseCaseTest {
 
         var dataReserva = LocalDateTime.now().withHour(12);
         var amountOfTables = 2;
-        var reservationReq = new ReservationDTO(resturant.getId(), "idUser", amountOfTables, dataReserva);
+        var reservationReq = new CreateReservationDTO(resturant.getId(), "idUser", amountOfTables, dataReserva);
 
         when(restaurantGateway.findById(resturant.getId())).thenReturn(Optional.of(resturant));
 
@@ -56,8 +56,8 @@ class CreateReservationUseCaseTest {
         verify(restaurantGateway, times(1)).save(any(Restaurant.class));
         assertThat(result).isNotNull();
         assertThat(result.date()).isEqualTo(dataReserva);
-        assertThat(result.idRestaurant()).isEqualTo(reservationReq.idRestaurant());
-        assertThat(result.idUser()).isEqualTo(reservationReq.idUser());
+        assertThat(result.restaurantId()).isEqualTo(reservationReq.idRestaurant());
+        assertThat(result.userId()).isEqualTo(reservationReq.idUser());
         assertThat(result.amountOfTables()).isEqualTo(amountOfTables);
 
     }
@@ -66,7 +66,7 @@ class CreateReservationUseCaseTest {
     void shouldReturnExceptionRestaurantNotFound() {
         var dataReserva = LocalDateTime.now().withHour(12);
         var amountOfTables = 2;
-        var reservationReq = new ReservationDTO("restaurantId", "idUser", amountOfTables, dataReserva);
+        var reservationReq = new CreateReservationDTO("restaurantId", "idUser", amountOfTables, dataReserva);
 
         when(restaurantGateway.findById(reservationReq.idRestaurant())).thenReturn(Optional.empty());
         var exception = assertThrows(IllegalStateException.class, () -> createReservationUseCase.execute(reservationReq));
