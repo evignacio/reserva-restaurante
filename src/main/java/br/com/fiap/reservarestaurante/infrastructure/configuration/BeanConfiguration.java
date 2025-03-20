@@ -55,4 +55,9 @@ public class BeanConfiguration {
     public FindUserReservationsUseCase findUserReservationsUseCase(RestaurantGateway restaurantGateway) {
         return new FindUserReservationsUseCase(restaurantGateway);
     }
+
+    @Bean
+    public CreateReviewUseCase createReviewUseCase(RestaurantGateway restaurantGateway, UserGateway userGateway) {
+        return new CreateReviewUseCase(restaurantGateway, userGateway);
+    }
 }

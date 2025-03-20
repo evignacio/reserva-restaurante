@@ -18,6 +18,7 @@ public abstract class UserMapper {
 
     public static UserModel toModel(User user) {
         return UserModel.builder()
+                .id(user.getId())
                 .name(user.getName())
                 .surname(user.getSurname())
                 .age(user.getAge())

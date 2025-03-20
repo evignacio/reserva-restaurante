@@ -1,5 +1,5 @@
 {
-  "name": "string",
+  "name": "Restaurant cool",
   "address": {
     "city": "Santos",
     "state": "SP",
@@ -10,7 +10,7 @@
   },
   "maxCapacity": 20,
   "category": {
-    "name": "cat1"
+    "name": "Italian"
   },
   "workPeriods": [
     {
@@ -20,12 +20,6 @@
     }
   ],
   "reservations": [
-    {
-      "idRestaurant": "restaurant123",
-      "idUser": "b9c17e7a-86f4-4ac3-a547-bd306f589a1d",
-      "amountOfTables": 2,
-      "date": "2025-03-19T19:00:00"
-    }
   ],
   "reviews": [
     {

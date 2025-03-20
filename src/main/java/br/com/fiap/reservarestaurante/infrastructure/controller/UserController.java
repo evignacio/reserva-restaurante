@@ -23,8 +23,8 @@ public class UserController {
         this.findUserUseCase = findUserUseCase;
     }
 
-    @GetMapping()
-    ResponseEntity<UserDTO> findUserByEmail(@RequestParam String email) {
+    @GetMapping("/{email}")
+    ResponseEntity<UserDTO> findUserByEmail(@PathVariable String email) {
         var response = findUserUseCase.execute(email);
         return ResponseEntity.ok(response);
     }
