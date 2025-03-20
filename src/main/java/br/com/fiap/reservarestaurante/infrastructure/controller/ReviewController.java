@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("/restaurants")
 public class ReviewController {
 
     private final CreateReviewUseCase createReviewUseCase;
@@ -16,7 +16,7 @@ public class ReviewController {
         this.createReviewUseCase = createReviewUseCase;
     }
 
-    @PostMapping("review")
+    @PostMapping("reviews")
     public ResponseEntity<ServiceResponse<Void>> createReview(@RequestBody ReviewDTO reviewDTO) {
         createReviewUseCase.execute(reviewDTO);
         return ResponseEntity.ok(ServiceResponse.build());

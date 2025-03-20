@@ -17,7 +17,7 @@ import java.util.Base64;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/restaurant")
+@RequestMapping(value = "/restaurants")
 public class RestaurantController {
 
     private final ListRestaurantsUseCase listRestaurantsUseCase;

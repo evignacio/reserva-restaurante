@@ -1,26 +1,44 @@
 package br.com.fiap.reservarestaurante.infrastructure.controller;
 
+import br.com.fiap.reservarestaurante.core.dto.CreateReservationDTO;
+import br.com.fiap.reservarestaurante.core.dto.ReservationDTO;
+import br.com.fiap.reservarestaurante.core.usecase.CreateReservationUseCase;
 import br.com.fiap.reservarestaurante.core.usecase.FinalizeReservationUseCase;
+import br.com.fiap.reservarestaurante.core.usecase.FindUserReservationsUseCase;
 import br.com.fiap.reservarestaurante.infrastructure.controller.response.ServiceResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/restaurant")
+@RequestMapping
 public class ReservationController {
 
+    private final CreateReservationUseCase createReservationUseCase;
     private final FinalizeReservationUseCase finalizeReservationUseCase;
+    private final FindUserReservationsUseCase findUserReservationsUseCase;
 
-    public ReservationController(FinalizeReservationUseCase finalizeReservationUseCase) {
+    public ReservationController(CreateReservationUseCase createReservationUseCase, FinalizeReservationUseCase finalizeReservationUseCase, FindUserReservationsUseCase findUserReservationsUseCase) {
+        this.createReservationUseCase = createReservationUseCase;
         this.finalizeReservationUseCase = finalizeReservationUseCase;
+        this.findUserReservationsUseCase = findUserReservationsUseCase;
     }
 
-    @PatchMapping("{idRestaurant}/reservation/{idReservation}")
-    public ResponseEntity<ServiceResponse<Void>> finalizeReservation(@PathVariable String idReservation, @PathVariable String idRestaurant) {
+    @PostMapping("reservations")
+    public ResponseEntity<ServiceResponse<ReservationDTO>> createReservation(@RequestBody CreateReservationDTO reviewDTO) {
+        createReservationUseCase.execute(reviewDTO);
+        return ResponseEntity.ok(ServiceResponse.build());
+    }
+
+    @PatchMapping("reservations/{idReservation}/restaurants/{idRestaurant}")
+    public ResponseEntity<ServiceResponse<Void>> finalizeReservation(@PathVariable String idRestaurant, @PathVariable String idReservation) {
         finalizeReservationUseCase.execute(idReservation, idRestaurant);
         return ResponseEntity.ok(ServiceResponse.build());
+    }
+
+    @GetMapping("reservations/users/{idUser}")
+    public ResponseEntity<ServiceResponse<Set<ReservationDTO>>> findUserReservation(@PathVariable String idUser) {
+        return ResponseEntity.ok(ServiceResponse.build(findUserReservationsUseCase.execute(idUser)));
     }
 }

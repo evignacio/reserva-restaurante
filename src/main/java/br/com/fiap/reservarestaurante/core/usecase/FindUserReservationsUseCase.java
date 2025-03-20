@@ -24,7 +24,7 @@ public class FindUserReservationsUseCase {
                         .forEach(reservation ->
                                 reservationDTOS
                                         .add(new ReservationDTO(
-                                                null,
+                                                reservation.getId(),
                                                 restaurant.getId(),
                                                 restaurant.getName(),
                                                 reservation.getIdUser(),
