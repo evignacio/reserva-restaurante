@@ -2,8 +2,9 @@
 
 1. [Introducao](#Introducao)
 2. [Funcionalidades](#Funcionalidades)
-2. [Instalacao local](#Instalacao)
-3. [Cloud](#cloud)
+3. [Instalacao local](#Instalacao)
+4. [Teste](#Testes)
+5. [Cloud](#cloud)
 
 ## Introducao
 
@@ -17,11 +18,11 @@ consiste em uma API REST de gestao de reservas de restaurantes, desenvolvida uti
 
 ### Tecnologias utilizadas
 
-* ![Java](https://img.shields.io/badge/Java-21-blue?style=for-the-badge&logo=java)
-* ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen?style=for-the-badge)
-* ![Maven](https://img.shields.io/badge/Maven-3.8.6-C71A36?style=for-the-badge&logo=apachemaven)
-* ![Docker](https://img.shields.io/badge/Docker-24.0.6-2496ED?style=for-the-badge&logo=docker)
-* ![Mongo](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Java](https://img.shields.io/badge/Java-21-blue?style=for-the-badge&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen?style=for-the-badge)
+![Maven](https://img.shields.io/badge/Maven-3.8.6-C71A36?style=for-the-badge&logo=apachemaven)
+![Docker](https://img.shields.io/badge/Docker-24.0.6-2496ED?style=for-the-badge&logo=docker)
+![Mongo](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
 ## Funcionalidades
 
