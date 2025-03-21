@@ -26,15 +26,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     @MockitoBean
     CreateUserUseCase createUserUseCase;
+
     @MockitoBean
     DeleteUserUseCase deleteUserUseCase;
+
     @MockitoBean
     FindUserUseCase findUserUseCase;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     void shouldFindUser() throws Exception {
