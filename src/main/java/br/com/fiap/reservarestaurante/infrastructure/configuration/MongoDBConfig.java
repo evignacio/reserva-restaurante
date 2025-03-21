@@ -1,8 +1,6 @@
 package br.com.fiap.reservarestaurante.infrastructure.configuration;
 
-import br.com.fiap.reservarestaurante.infrastructure.repository.CategoryRepository;
 import br.com.fiap.reservarestaurante.infrastructure.repository.RestaurantRepository;
-import br.com.fiap.reservarestaurante.infrastructure.repository.model.CategoryModel;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.RestaurantModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
