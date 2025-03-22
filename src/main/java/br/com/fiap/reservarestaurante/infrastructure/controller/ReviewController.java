@@ -3,6 +3,7 @@ package br.com.fiap.reservarestaurante.infrastructure.controller;
 import br.com.fiap.reservarestaurante.core.dto.ReviewDTO;
 import br.com.fiap.reservarestaurante.core.usecase.CreateReviewUseCase;
 import br.com.fiap.reservarestaurante.infrastructure.controller.response.ServiceResponse;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,6 @@ public class ReviewController {
     @PostMapping()
     public ResponseEntity<ServiceResponse<Void>> createReview(@RequestBody ReviewDTO reviewDTO) {
         createReviewUseCase.execute(reviewDTO);
-        return ResponseEntity.ok(ServiceResponse.build());
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
     }
 }
