@@ -1,0 +1,16 @@
+spring:
+  banner:
+    location: banner.txt
+  data:
+    mongodb:
+      initialization-mode: always
+      uri: mongodb+srv://${dbuser}:${dbpassword}@cluster0.kgutn.mongodb.net/reserva-restaurante?retryWrites=true&w=majority&appName=Cluster0
+  application:
+    name: reserva-restaurante
+logging:
+  level:
+    org.springframework.data.mongodb.core: DEBUG
+
+springdoc:
+  swagger-ui:
+    path=/swagger-ui.html
