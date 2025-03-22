@@ -4,7 +4,7 @@ spring:
   data:
     mongodb:
       initialization-mode: always
-      uri: mongodb://localhost:27017/reserva-restaurante
+      uri: mongodb+srv://${dbuser}:${dbpassword}@cluster0.kgutn.mongodb.net/reserva-restaurante?retryWrites=true&w=majority&appName=Cluster0
   application:
     name: reserva-restaurante
 logging:

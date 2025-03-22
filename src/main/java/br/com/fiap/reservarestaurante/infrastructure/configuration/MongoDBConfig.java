@@ -17,9 +17,10 @@ public class MongoDBConfig {
     @Bean
     CommandLineRunner runner(RestaurantRepository restaurantRepository) {
         return args -> {
+            restaurantRepository.deleteAll();
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
-            TypeReference<RestaurantModel> typeReference = new TypeReference<RestaurantModel>() {
+            TypeReference<RestaurantModel> typeReference = new TypeReference<>() {
             };
             InputStream inputStream = TypeReference.class.getResourceAsStream("/data/restaurant.json");
             RestaurantModel tabelaDePrecos = mapper.readValue(inputStream, typeReference);

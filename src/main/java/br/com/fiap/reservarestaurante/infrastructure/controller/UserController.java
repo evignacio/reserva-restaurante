@@ -23,8 +23,8 @@ public class UserController {
         this.findUserUseCase = findUserUseCase;
     }
 
-    @GetMapping()
-    ResponseEntity<UserDTO> findUserByEmail(@RequestParam String email) {
+    @GetMapping("{email}")
+    ResponseEntity<UserDTO> findUserByEmail(@PathVariable String email) {
         var response = findUserUseCase.execute(email);
         return ResponseEntity.ok(response);
     }
@@ -36,7 +36,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "{id}")
     ResponseEntity<Void> deleteUser(@PathVariable String id) {
         deleteUserUseCase.execute(id);
         return ResponseEntity.ok().build();
