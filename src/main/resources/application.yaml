@@ -1,4 +1,6 @@
 spring:
+  banner:
+    location: banner.txt
   data:
     mongodb:
       initialization-mode: always
