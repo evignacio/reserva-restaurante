@@ -26,9 +26,9 @@ public class ReservationController {
     }
 
     @PostMapping("reservations")
-    public ResponseEntity<ServiceResponse<ReservationDTO>> createReservation(@RequestBody CreateReservationDTO reviewDTO) {
-        createReservationUseCase.execute(reviewDTO);
-        return ResponseEntity.ok(ServiceResponse.build());
+    public ResponseEntity<ServiceResponse<ReservationDTO>> createReservation(@RequestBody CreateReservationDTO reservationDTO) {
+        var reservation = createReservationUseCase.execute(reservationDTO);
+        return ResponseEntity.ok(ServiceResponse.build(reservation));
     }
 
     @PatchMapping("reservations/{idReservation}/restaurants/{idRestaurant}")

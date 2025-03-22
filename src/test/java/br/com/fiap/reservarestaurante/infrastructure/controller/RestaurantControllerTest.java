@@ -10,6 +10,7 @@ import br.com.fiap.reservarestaurante.infrastructure.repository.model.AddressMod
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.CategoryModel;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.RestaurantModel;
 import br.com.fiap.reservarestaurante.infrastructure.repository.model.WorkPeriodModel;
+import br.com.fiap.reservarestaurante.metadata.IntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,7 @@ class RestaurantControllerTest {
                 .id(idRestaurant)
                 .name("Restaurant Name")
                 .address(address)
-                .maxCapacity(20)
+                .maxCapacity(50)
                 .category(category)
                 .workPeriods(workPeriods)
                 .build();
@@ -81,6 +82,7 @@ class RestaurantControllerTest {
     }
 
     @Test
+    @IntegrationTest
     void shouldListRestaurants() throws Exception {
         when(restaurantRepository.findAll("Restaurant Name", "Italian", null)).thenReturn(Set.of(restaurantModel));
         mockMvc.perform(get("/restaurants").param("name", "Restaurant Name").param("categoryName", "Italian"))
@@ -90,6 +92,7 @@ class RestaurantControllerTest {
     }
 
     @Test
+    @IntegrationTest
     void shouldCreateRestaurant() throws Exception {
         Address address = new Address("São Paulo", "SP", "Brazil", "Rua A", 123, "12345678");
         Category category = new Category("Italian");
@@ -105,13 +108,16 @@ class RestaurantControllerTest {
         when(restaurantRepository.save(restaurantModel)).thenReturn(restaurantModel);
 
         mockMvc.perform(post("/restaurants")
-                .contentType("application/json")
-                .content(request))
+                        .contentType("application/json")
+                        .content(request))
                 .andDo(print())
+                .andExpect(jsonPath("$.data.name").value(restaurantModel.getName()))
+                .andExpect(jsonPath("$.data.maxCapacity").value(restaurantModel.getMaxCapacity()))
                 .andExpect(status().isOk());
     }
 
     @Test
+    @IntegrationTest
     void shouldDeleteRestaurant() throws Exception {
         when(restaurantRepository.findById(idRestaurant)).thenReturn(Optional.of(restaurantModel));
         doNothing().when(restaurantRepository).deleteById(idRestaurant);

@@ -6,6 +6,7 @@ import br.com.fiap.reservarestaurante.core.dto.UserDTO;
 import br.com.fiap.reservarestaurante.core.usecase.CreateUserUseCase;
 import br.com.fiap.reservarestaurante.core.usecase.DeleteUserUseCase;
 import br.com.fiap.reservarestaurante.core.usecase.FindUserUseCase;
+import br.com.fiap.reservarestaurante.metadata.IntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @IntegrationTest
     void shouldFindUser() throws Exception {
         var id = UUID.randomUUID().toString();
         var user = new UserDTO(id, "a", "a@fiap.com.br");
@@ -50,12 +52,14 @@ class UserControllerTest {
     }
 
     @Test
+    @IntegrationTest
     void shouldDeleteUser() throws Exception {
         var id = UUID.randomUUID();
         this.mockMvc.perform(delete("/users/" + id)).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
+    @IntegrationTest
     void shouldCreateUser() throws Exception {
         var req = new CreateUserDTO("abc", "bcd", 34, "a@fiap.com.br");
         var user = new User("abc", "bcd", 34, "a@fiap.com.br");
