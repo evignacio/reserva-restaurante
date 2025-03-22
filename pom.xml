@@ -121,6 +121,18 @@
             <version>5.5.1</version>
             <scope>test</scope>
         </dependency>
+        <!--        Performance-->
+        <dependency>
+            <groupId>io.gatling</groupId>
+            <artifactId>gatling-app</artifactId>
+            <version>3.13.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.gatling.highcharts</groupId>
+            <artifactId>gatling-charts-highcharts</artifactId>
+            <version>3.13.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -147,6 +159,18 @@
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>4.2.9</version>
+                <configuration>
+                    <jvmArgs>
+                        <jvmArg>--add-opens</jvmArg>
+                        <jvmArg>java.base/java.lang=ALL-UNNAMED</jvmArg>
+                    </jvmArgs>
+                    <simulationClass>br.com.fiap.reservarestaurante.performance.CreateUserSimulation</simulationClass>
                 </configuration>
             </plugin>
         </plugins>
