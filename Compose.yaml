@@ -1,0 +1,26 @@
+services:
+  reserva-restaurante-app:
+    image: evandroig/reserva-restaurante:latest
+    networks:
+      - "reserva-restaurante-network"
+    ports:
+      - "8080:8080"
+    links:
+      - "mongodb:servicedb"
+    depends_on:
+      - "mongodb"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/reserva-restaurante
+  mongodb:
+    networks:
+      - "reserva-restaurante-network"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+    image: mongo:latest
+networks:
+  parquimetro-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"

@@ -69,6 +69,7 @@ public abstract class RestaurantMapper {
                 .stream()
                 .map(r -> ReviewModel.builder()
                         .id(r.getId())
+                        .idRestaurant(r.getIdRestaurant())
                         .idUser(r.getIdUser())
                         .content(r.getContent())
                         .rating(r.getRating())

@@ -9,6 +9,7 @@ import br.com.fiap.reservarestaurante.core.usecase.DeleteRestaurantUseCase;
 import br.com.fiap.reservarestaurante.core.usecase.ListRestaurantsUseCase;
 import br.com.fiap.reservarestaurante.infrastructure.controller.response.ServiceResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import java.util.Base64;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/restaurant")
+@RequestMapping(value = "/restaurants")
 public class RestaurantController {
 
     private final ListRestaurantsUseCase listRestaurantsUseCase;
@@ -31,7 +32,11 @@ public class RestaurantController {
     }
 
     @GetMapping
-    public ResponseEntity<ServiceResponse<Set<RestaurantDTO>>> listRestaurants(@RequestParam(required = false) String name, @RequestParam(required = false) String categoryName, @RequestParam(required = false, name = "address") String addressBase64, @RequestParam(required = false) LocalDateTime date) {
+    public ResponseEntity<ServiceResponse<Set<RestaurantDTO>>> listRestaurants(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String categoryName,
+            @Parameter(example = "ewogICAgImNpdHkiOiAiU2FudG9zIiwKICAgICJzdGF0ZSI6ICJTUCIsCiAgICAiY291bnRyeSI6ICJCcmF6aWwiCn0") @RequestParam(required = false, name = "address") String addressBase64,
+            @Parameter(example = "2025-03-17T12:25:00") @RequestParam(required = false) LocalDateTime date) {
         AddressDTO address = null;
         if (addressBase64 != null) {
             try {
