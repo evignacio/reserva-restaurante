@@ -17,6 +17,7 @@ public class MongoDBConfig {
     @Bean
     CommandLineRunner runner(RestaurantRepository restaurantRepository) {
         return args -> {
+            restaurantRepository.deleteAll();
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             TypeReference<RestaurantModel> typeReference = new TypeReference<>() {
