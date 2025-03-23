@@ -37,7 +37,7 @@ public class StepDefinitions {
     }
 
     @Then("devo ter status {string}")
-    public void devo_ter_status() {
+    public void devo_ter_status(String string) {
         assertEquals(HttpStatus.CREATED.value(), userResponse.getStatusCode());
     }
 
@@ -52,7 +52,7 @@ public class StepDefinitions {
     }
 
     @Then("devo encontrar dados de usuario e ter status {string}")
-    public void devo_encontrar_dados_de_usuario_e_ter_status() {
+    public void devo_encontrar_dados_de_usuario_e_ter_status(String string) {
         assertNotNull(userResponse.body());
         assertEquals(HttpStatus.OK.value(), userResponse.getStatusCode());
     }
@@ -66,7 +66,7 @@ public class StepDefinitions {
         restaurantResponse = RestAssured.given().contentType(MediaType.APPLICATION_JSON_VALUE).when().get(urlRestaurantes);
     }
     @Then("devo encontrar dados de restaurante e ter status {string}")
-    public void devo_encontrar_dados_de_restaurante_e_ter_status() {
+    public void devo_encontrar_dados_de_restaurante_e_ter_status(String string) {
         assertNotNull(restaurantResponse.body());
         assertEquals(HttpStatus.OK.value(), restaurantResponse.getStatusCode());
     }
