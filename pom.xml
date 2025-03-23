@@ -170,7 +170,7 @@
                         <jvmArg>--add-opens</jvmArg>
                         <jvmArg>java.base/java.lang=ALL-UNNAMED</jvmArg>
                     </jvmArgs>
-                    <simulationClass>br.com.fiap.reservarestaurante.performance.CreateUserSimulation</simulationClass>
+                    <simulationClass>br.com.fiap.reservarestaurante.performance.AppSilumation</simulationClass>
                 </configuration>
             </plugin>
         </plugins>
