@@ -42,7 +42,7 @@ Para executar os testes, basta executar o comando `mvn test` no terminal.
 ### Relatórios
 Após a finalização dos testes, será possível também acessar os relatórios da aplicação seguindo as instruções listadas abaixo:
 * Testes unitários/integrados: acesse o endereco [Allure reports](http://localhost:5050/allure-docker-service/projects/default/reports/latest/index.html?redirect=false)
-* Performance: execute o comando `mvn gatling:test` e acesse o diretório `target/gatling/performancesimulation-{data-da-execução}/index.html`
+* Performance: acesse o diretório `gatling/appsilumation-20250323172102588/index.html`
 * BDD: acesse o diretório `target/cucumber-reports.html`
 
 ## Cloud

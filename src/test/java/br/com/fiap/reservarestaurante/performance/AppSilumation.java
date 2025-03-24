@@ -4,12 +4,20 @@ package br.com.fiap.reservarestaurante.performance;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
+import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
+@SpringBootTest
+@AutoConfigureMockMvc
+@AutoConfigureDataMongo
+@ActiveProfiles("test")
 public class AppSilumation extends Simulation {
 
     HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8080");
