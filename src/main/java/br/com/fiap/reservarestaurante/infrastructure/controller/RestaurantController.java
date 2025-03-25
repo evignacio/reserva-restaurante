@@ -9,7 +9,12 @@ import br.com.fiap.reservarestaurante.core.usecase.DeleteRestaurantUseCase;
 import br.com.fiap.reservarestaurante.core.usecase.ListRestaurantsUseCase;
 import br.com.fiap.reservarestaurante.infrastructure.controller.response.ServiceResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +36,13 @@ public class RestaurantController {
         this.deleteRestaurantUseCase = deleteRestaurantUseCase;
     }
 
+    @Operation(summary = "Buscar restaurantes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Restaurantes encontrados",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ServiceResponse.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal Error",
+                    content = @Content)})
     @GetMapping
     public ResponseEntity<ServiceResponse<Set<RestaurantDTO>>> listRestaurants(
             @RequestParam(required = false) String name,
@@ -53,12 +65,26 @@ public class RestaurantController {
         return ResponseEntity.ok(ServiceResponse.build(restaurants));
     }
 
+    @Operation(summary = "Cadastrar restaurante")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Restaurantes cadastrado",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ServiceResponse.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal Error",
+                    content = @Content)})
     @PostMapping
     public ResponseEntity<ServiceResponse<Restaurant>> createRestaurant(@RequestBody CreateRestaurantDTO createRestaurantDTO) {
         var restaurant = createRestaurantUseCase.execute(createRestaurantDTO);
         return ResponseEntity.ok(ServiceResponse.build(restaurant));
     }
 
+    @Operation(summary = "Deletar restaurantes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Restaurante deletado",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ServiceResponse.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal Error",
+                    content = @Content)})
     @DeleteMapping("{idRestaurant}")
     public ResponseEntity<ServiceResponse<Void>> deleteRestaurant(@PathVariable String idRestaurant) {
         deleteRestaurantUseCase.execute(idRestaurant);
