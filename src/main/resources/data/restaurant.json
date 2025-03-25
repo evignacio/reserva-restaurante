@@ -1,4 +1,5 @@
 {
+  "id": "7cb9ab3d-0804-4a7a-8649-1c6ae557a831",
   "name": "Restaurant cool",
   "address": {
     "city": "Santos",
@@ -10,6 +11,7 @@
   },
   "maxCapacity": 20,
   "category": {
+    "id": "29516255-d8b3-4957-bdb3-e5ab461fbf9d",
     "name": "Italian"
   },
   "workPeriods": [
@@ -20,11 +22,18 @@
     }
   ],
   "reservations": [
+    {
+      "idUser": "1742c17b-71a8-4a43-aed3-962ae9c3d8ad",
+      "idRestaurant": "7cb9ab3d-0804-4a7a-8649-1c6ae557a831",
+      "amountOfTables": "2",
+      "date": "2025-03-17T12:25:00"
+    }
   ],
   "reviews": [
     {
-      "idUser": "user789",
-      "idRestaurant": "restaurant456",
+      "id": "4f217595-9f79-486f-81bc-0d6dbf91e99f",
+      "idUser": "1742c17b-71a8-4a43-aed3-962ae9c3d8ad",
+      "idRestaurant": "7cb9ab3d-0804-4a7a-8649-1c6ae557a831",
       "rating": 5,
       "content": "Amazing food and excellent service!"
     }
